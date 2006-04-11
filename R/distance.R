@@ -23,13 +23,6 @@ distance <- function(x, method="euclidean")
 # 4: mahalanobis
 # 5: jaccard
 
-	if(!is.loaded(symbol.C("psum"))) {
-		if(exists("lib.loc")) 
-			dyn.load(paste(lib.loc, "/ecodist/src/ecodist.so", sep=""))
-		else
-			dyn.load("ecodist.so")
-	}
-
 pairedsum <- function(x)
 {
 	### paired sums

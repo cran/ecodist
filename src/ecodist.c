@@ -6,11 +6,11 @@
 #define UNIF unif_rand()
 #define S_EVALUATOR
 
-void bootstrap(double *x, double *y, long *n, long *xlen, long *nboot, double *pboot, double *bootcor, long *rarray, long *rmat, double *xdif, double *ydif)
+void bootstrap(double *x, double *y, int *n, int *xlen, int *nboot, double *pboot, double *bootcor, int *rarray, int *rmat, double *xdif, double *ydif)
 
 {
 
-long i, j, k, l;
+int i, j, k, l;
 double r;
 double nsamp;
 double xmean, ymean;
@@ -104,13 +104,13 @@ RANDOUT;
 }
 
 
-void permute(double *x, double *y, long *n, long *xlen, long *nperm, double *zstats, double *tmat, long *rarray)
+void permute(double *x, double *y, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
 
 {
 
-long i, k, l, m;
+int i, k, l, m;
 double cumsum;
-long temp;
+int temp;
 
 S_EVALUATOR
 
@@ -153,7 +153,7 @@ for(i = 1; i < *nperm; i++) {
 
    for(k = 0; k < (*n - 1); k++) {
       l = *n - k - 1;
-      m = (long)((float)l * UNIF);
+      m = (int)((float)l * UNIF);
       if(m > l) m = l;
       temp = rarray[l];
       rarray[l] = rarray[m];
@@ -192,15 +192,15 @@ RANDOUT;
 
 
 
-void permpart(double *hmat, double *bmat, double *omat, double *y, double *xcor, double *ycor, long *n, long *ncol, long *xlen, long *nperm, double *zstats, double *tmat, long *rarray)
+void permpart(double *hmat, double *bmat, double *omat, double *y, double *xcor, double *ycor, int *n, int *ncol, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
 
 {
 
-long i, k, l, m;
+int i, k, l, m;
 double cumsum;
 double bsum;
 double w1, w2;
-long temp;
+int temp;
 
 S_EVALUATOR
 
@@ -245,7 +245,7 @@ for(i = 1; i < *nperm; i++) {
 
    for(k = 0; k < (*n - 1); k++) {
       l = *n - k - 1;
-      m = (long)((float)l * UNIF);
+      m = (int)((float)l * UNIF);
       if(m > l) m = l;
       temp = rarray[l];
       rarray[l] = rarray[m];
@@ -327,11 +327,11 @@ RANDOUT;
 }
 
 
-void xbootstrap(double *x, double *y, long *n, long *xlen, long *nboot, double *pboot, double *bootcor, long *rarray, long *rmat, double *xdif, double *ydif)
+void xbootstrap(double *x, double *y, int *n, int *xlen, int *nboot, double *pboot, double *bootcor, int *rarray, int *rmat, double *xdif, double *ydif)
 
 {
 
-long i, j, k;
+int i, j, k;
 double r;
 double nsamp;
 double xmean, ymean;
@@ -429,13 +429,13 @@ RANDOUT;
 
 
 
-void xpermute(double *x, double *y, long *n, long *xlen, long *nperm, double *zstats, double *tmat, long *rarray)
+void xpermute(double *x, double *y, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
 
 {
 
-long i, k, l, m;
+int i, k, l, m;
 double cumsum;
-long temp;
+int temp;
 
 S_EVALUATOR
 
@@ -468,7 +468,7 @@ for(i = 1; i < *nperm; i++) {
 
    for(k = 0; k < (*n - 1); k++) {
       l = *n - k - 1;
-      m = (long)((float)l * UNIF);
+      m = (int)((float)l * UNIF);
       if(m > l) m = l;
       temp = rarray[l];
       rarray[l] = rarray[m];
@@ -507,13 +507,13 @@ RANDOUT;
 
 
 
-void xpermpart(double *hmat, double *y, double *xcor, double *ycor, long *n, long *xlen, long *nperm, double *zstats, double *tmat, long *rarray)
+void xpermpart(double *hmat, double *y, double *xcor, double *ycor, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
 
 {
 
-long i, k, l, m;
+int i, k, l, m;
 double cumsum;
-long temp;
+int temp;
 
 S_EVALUATOR
 
@@ -560,7 +560,7 @@ for(i = 1; i < *nperm; i++) {
 
    for(k = 0; k < (*n - 1); k++) {
       l = *n - k - 1;
-      m = (long)((float)l * UNIF);
+      m = (int)((float)l * UNIF);
       if(m > l) m = l;
       temp = rarray[l];
       rarray[l] = rarray[m];
@@ -611,10 +611,10 @@ RANDOUT;
 
 
 
-void bcdist(double *x, long *pnrow, long *pncol, double *dist)
+void bcdist(double *x, int *pnrow, int *pncol, double *dist)
 {
-long i, j, k, l;
-long nrow, ncol;
+int i, j, k, l;
+int nrow, ncol;
 double sumi, sumj;
 double minsum;
 
@@ -646,10 +646,10 @@ for(i = 0; i < (nrow - 1); i++) {
 }
 
 
-void weight(long *n, double *datadist, double *d1, double *d2, double *w)
+void weight(int *n, double *datadist, double *d1, double *d2, double *w)
 
 {
-long i;
+int i;
 double m1, m2;
 double w1, w2;
 double pi;
@@ -698,13 +698,13 @@ for(i = 0; i < *n * *n; i++) {
 }
 }
 
-void newpermone(double *x, long *dclass, long *n, long *xlen, long *nperm, double *zstats, double *tmat, long *rarray)
+void newpermone(double *x, int *dclass, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
 
 {
 
-long i, k, l, m;
+int i, k, l, m;
 double cumsum;
-long temp;
+int temp;
 
 S_EVALUATOR
 
@@ -749,7 +749,7 @@ for(i = 1; i < *nperm; i++) {
 
    for(k = 0; k < (*n - 1); k++) {
       l = *n - k - 1;
-      m = (long)((float)l * UNIF);
+      m = (int)((float)l * UNIF);
       if(m > l) m = l;
       temp = rarray[l];
       rarray[l] = rarray[m];
@@ -790,13 +790,13 @@ RANDOUT;
 
 
 
-void newpermtwo(double *x, double *y, long *n, long *xlen, long *nperm, double *zstats, double *tmat, long *rarray)
+void newpermtwo(double *x, double *y, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
 
 {
 
-long i, k, l, m;
+int i, k, l, m;
 double cumsum;
-long temp;
+int temp;
 float naval = -9999;
 
 S_EVALUATOR
@@ -842,7 +842,7 @@ for(i = 1; i < *nperm; i++) {
 
    for(k = 0; k < (*n - 1); k++) {
       l = *n - k - 1;
-      m = (long)((float)l * UNIF);
+      m = (int)((float)l * UNIF);
       if(m > l) m = l;
       temp = rarray[l];
       rarray[l] = rarray[m];
@@ -883,11 +883,11 @@ RANDOUT;
 
 
 
-void psum(double *x, long *pnrow, long *pncol, double *dist)
+void psum(double *x, int *pnrow, int *pncol, double *dist)
 {
-long row1, row2, col1;
-long nrow, ncol;
-long l;
+int row1, row2, col1;
+int nrow, ncol;
+int l;
 double thisval, thatval;
 
 l = 0;
@@ -908,11 +908,11 @@ ncol = *pncol;
 }
     
 
-void pdiff(double *x, long *pnrow, long *pncol, double *dist)
+void pdiff(double *x, int *pnrow, int *pncol, double *dist)
 {
-long row1, row2, col1;
-long nrow, ncol;
-long l;
+int row1, row2, col1;
+int nrow, ncol;
+int l;
 double thisval, thatval;
 
 l = 0;
@@ -933,11 +933,11 @@ ncol = *pncol;
 }
     
 
-void jpres(double *x, long *pnrow, long *pncol, double *dist)
+void jpres(double *x, int *pnrow, int *pncol, double *dist)
 {
-long row1, row2, col1;
-long nrow, ncol;
-long l;
+int row1, row2, col1;
+int nrow, ncol;
+int l;
 double thisval, thatval;
 
 l = 0;
@@ -963,11 +963,11 @@ ncol = *pncol;
 }
     
 
-void jabs(double *x, long *pnrow, long *pncol, double *dist)
+void jabs(double *x, int *pnrow, int *pncol, double *dist)
 {
-long row1, row2, col1;
-long nrow, ncol;
-long l;
+int row1, row2, col1;
+int nrow, ncol;
+int l;
 double thisval, thatval;
 
 l = 0;
@@ -993,11 +993,11 @@ ncol = *pncol;
 }
     
 
-void jfirst(double *x, long *pnrow, long *pncol, double *dist)
+void jfirst(double *x, int *pnrow, int *pncol, double *dist)
 {
-long row1, row2, col1;
-long nrow, ncol;
-long l;
+int row1, row2, col1;
+int nrow, ncol;
+int l;
 double thisval, thatval;
 
 l = 0;
@@ -1023,11 +1023,11 @@ ncol = *pncol;
 }
     
 
-void jsec(double *x, long *pnrow, long *pncol, double *dist)
+void jsec(double *x, int *pnrow, int *pncol, double *dist)
 {
-long row1, row2, col1;
-long nrow, ncol;
-long l;
+int row1, row2, col1;
+int nrow, ncol;
+int l;
 double thisval, thatval;
 
 l = 0;

@@ -20,13 +20,8 @@ bcdist <- function(x, rmzero = FALSE)
 		x <- x[xsum > 0,  ]
 	}
 	dist.v <- rep(0, (nrow(x) * (nrow(x) - 1))/2)	
-	if(!is.loaded(symbol.C("bcdist"))) {
-		if(exists("lib.loc")) 
-			dyn.load(paste(lib.loc, "/ecodist/src/ecodist.so", sep=""))
-		else
-			dyn.load("ecodist.so")
-	}
-	cresults <- .C("bcdist",
+
+   cresults <- .C("bcdist",
 		as.double(as.vector(t(x))),
 		as.integer(nrow(x)),
 		as.integer(ncol(x)),

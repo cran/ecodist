@@ -3,12 +3,6 @@ pmgram <- function(data, space, partial, nclass, stepsize, resids = FALSE, nperm
 {
 
 	epsilon <- 0.0000001
-	if(!is.loaded(symbol.C("newpermone"))) {
-		if(exists("lib.loc")) 
-			dyn.load(paste(lib.loc, "/ecodist/src/ecodist.so", sep=""))
-		else
-			dyn.load("ecodist.so")
-	}
 
 	if( class(data) == "dist") {
 		data <- as.matrix(as.vector(data))

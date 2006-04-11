@@ -40,12 +40,7 @@ mantel <- function(formula = formula(data), data = sys.parent(), nperm = 1000, m
 # 
 # requires mantel.c (Included in ecodist.c.)
 #
-	if(!is.loaded(symbol.C("permute"))) {
-		if(exists("lib.loc")) 
-			dyn.load(paste(lib.loc, "/ecodist/src/ecodist.so", sep=""))
-		else
-			dyn.load("ecodist.so")
-	}
+
 # Stuff R needs to be able to use a formula
         m <- match.call(expand.dots = FALSE)
         m2 <- match(c("formula", "data"), names(m), nomatch=0)
