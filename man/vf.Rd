@@ -8,15 +8,15 @@
 vf(ord, vars, nperm = 100)
 }
 \arguments{
-  \item{ord}{ matrix containing an ordination result with axes as columns. }
+  \item{ord}{ matrix containing a 2-dimensional ordination result with axes as columns. }
   \item{vars}{ matrix with ancillary variables as columns. }
   \item{nperm}{ number of permutation for the significance test. If nperm = 0, the test will be omitted. }
 }
 \details{
- Vector fitting finds the maximum correlation of the individual variables with aconfiguration of samples in ordination space. 
+ Vector fitting finds the maximum correlation of the individual variables with a configuration of samples in ordination space. 
 }
 \value{
-  a matrix with the first n columns containing the scores for every variable in each of the n dimensions of the ordination space. r is the maximum correlation of the variable with the ordination space, and pval is the result of the permutation test.
+  a matrix with the first 2 columns containing the scores for every variable in each of the 2 dimensions of the ordination space. r is the maximum correlation of the variable with the ordination space, and pval is the result of the permutation test.
   }
 \references{ Jongman, R.H.G., C.J.F. ter Braak and O.F.R. van Tongeren. 1995. Data analysis in community and landscape ecology. Cambridge University Press, New York. }
 \author{ Sarah Goslee, Sarah.Goslee@ars.usda.gov }

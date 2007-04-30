@@ -949,7 +949,7 @@ ncol = *pncol;
 		thatval = x[row1 * ncol + col1];
 		for(row2 = 0; row2 < nrow; row2++) {
 			thisval = x[row2 * ncol + col1];
-			if(thisval > 0 & thatval > 0) {
+			if((thisval > 0) & (thatval > 0)) {
 				dist[l] = 1;
 			}
 			else {
@@ -979,7 +979,7 @@ ncol = *pncol;
 		thatval = x[row1 * ncol + col1];
 		for(row2 = 0; row2 < nrow; row2++) {
 			thisval = x[row2 * ncol + col1];
-			if(thisval == 0 & thatval == 0) {
+			if((thisval == 0) & (thatval == 0)) {
 				dist[l] = 1;
 			}
 			else {
@@ -1009,7 +1009,7 @@ ncol = *pncol;
 		thatval = x[row1 * ncol + col1];
 		for(row2 = 0; row2 < nrow; row2++) {
 			thisval = x[row2 * ncol + col1];
-			if(thisval > 0 & thatval == 0) {
+			if((thisval > 0) & (thatval == 0)) {
 				dist[l] = 1;
 			}
 			else {
@@ -1039,7 +1039,7 @@ ncol = *pncol;
 		thatval = x[row1 * ncol + col1];
 		for(row2 = 0; row2 < nrow; row2++) {
 			thisval = x[row2 * ncol + col1];
-			if(thisval == 0 & thatval > 0) {
+			if((thisval == 0) & (thatval > 0)) {
 				dist[l] = 1;
 			}
 			else {

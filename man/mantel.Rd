@@ -22,6 +22,7 @@ mantel(formula = formula(data), data = sys.parent(), nperm = 1000, mrank = FALSE
 }
 \details{
   If only one independent variable is given, the simple Mantel r (r12) is calculated. If more than one independent variable is given, the partial Mantel r  (ryx|x1 ...) is calculated using the regression residual method of Smouse et al. 1986.
+The bootstrapping is actually resampling without replacement, because duplication of samples is not useful in a dissimilarity context (the dissimilarity of a sample with itself is zero). Resampling within dissimilarity values is inappropriate, just as for permutation.
 }
 \value{
   \item{mantelr }{Mantel coefficient.}

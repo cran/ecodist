@@ -22,7 +22,6 @@ Correlate variables from 1 matrix with variables from another matrix. If TRIM, s
   Returns a correlation table between the variables of 2 matrices.
   }
 \author{ Dean Urban }
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
 \examples{
 # toy example
 speciesdata <- matrix(runif(50), nrow=10)

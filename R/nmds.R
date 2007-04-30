@@ -16,7 +16,8 @@ nmds <- function(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1
 # If iconf is not specified, then a random configuration is used.
 # epsilon and maxit specify stopping points.
 # Returns a list of configurations (conf)
-# and a vector of final stress values (stress).
+# and a vector of final stress values (stress),
+# along with the cumulative and incremental r^2 for each axis.
 # The first nits elements are for the lowest number of dimensions.
 
 nmdscalc <- function(dmat, ndim, iconf, epsilon, maxit, trace)
@@ -85,6 +86,7 @@ list(conf = conf, stress = stress1)
 
 conf <- list(1:((maxdim - mindim + 1) * nits))
 stress <- list(1:((maxdim - mindim + 1) * nits))
+r2 <- list(1:((maxdim - mindim + 1) * nits))
 
 k <- 1
 
@@ -96,10 +98,11 @@ for(i in mindim:maxdim) {
       conf[[k]] <- nmdsr$conf
       stress[[k]] <- nmdsr$stress
       k <- k + 1
+      r2[[k]] <- cor(dmat, dist(nmdsr$conf)) ^ 2
    }
 }
 
-list(conf = conf, stress = unlist(stress))
+list(conf = conf, stress = unlist(stress), r2 = unlist(r2))
 
 }
 

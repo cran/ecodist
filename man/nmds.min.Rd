@@ -5,10 +5,11 @@
   Finds minimum stress configuration from output of nmds()
 }
 \usage{
-nmds.min(x)
+nmds.min(x, dims = 0)
 }
 \arguments{
   \item{x}{ output from nmds() }
+  \item{dims}{ desired dimensionality of result. If dims == 0 (the default) then the overall minimum stress configuration is chosen. }
 }
 \value{
   Configuration of minimum stress ordination (dataframe of

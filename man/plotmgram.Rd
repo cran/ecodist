@@ -6,7 +6,7 @@
   Plot a Mantel correlogram with solid symbols for significant values.
 }
 \usage{
-plotmgram(amgram, pval = 0.05, xlab = "Distance", ylab = "Mantel Correlation", ...)
+plotmgram(amgram, pval = 0.05, xlab = "Distance", ylab = "Mantel r", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

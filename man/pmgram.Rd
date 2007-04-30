@@ -5,13 +5,14 @@
  This function calculates simple and partial multivariate correlograms. 
 }
 \usage{
-pmgram(data, space, partial, nclass, stepsize, resids = FALSE, nperm = 1000)
+pmgram(data, space, partial, breaks, nclass, stepsize, resids = FALSE, nperm = 1000)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{ lower-triangular dissimilarity matrix. }
   \item{space}{ lower-triangular matrix of geographic distances. }
   \item{partial}{ optional, lower-triangular dissimilarity matrix of ancillary data. }
+  \item{breaks}{ locations of class breaks. If specified, overrides nclass and stepsize. }
   \item{nclass}{ number of distance classes. If not specified, Sturge's rule will be used
 to determine an appropriate number of classes. }
   \item{stepsize}{ width of each distance class. If not specified, nclass and the range of space.d will be used to calculate an appropriate default. }
@@ -37,7 +38,7 @@ If data has 2 columns and partial exists,
 }
 \value{
   Returns a matrix with one row for each distance class and 4 columns:
-  \item{dmax }{upper limit of the distance class.}
+  \item{lag }{midpoint of the distance class.}
   \item{ngroup }{number of distances in that class.}
   \item{mantelr }{Mantel r value.}
   \item{pval }{two-sided p-value.}

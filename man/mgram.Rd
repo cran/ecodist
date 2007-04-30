@@ -6,11 +6,12 @@
 	Calculates simple and partial Mantel correlograms. 
 }
 \usage{
-mgram(species.d, space.d, nclass, stepsize, nperm = 1000, mrank = FALSE, nboot = 500, pboot = 0.9, cboot = 0.95, alternative = "two.sided", trace = FALSE)
+mgram(species.d, space.d, breaks, nclass, stepsize, nperm = 1000, mrank = FALSE, nboot = 500, pboot = 0.9, cboot = 0.95, alternative = "two.sided", trace = FALSE)
 }
 \arguments{
   \item{species.d}{ lower-triangular dissimilarity matrix. }
   \item{space.d}{ lower-triangular matrix of geographic distances. }
+  \item{breaks}{ locations of class breaks. If specified, overrides nclass and stepsize. }
   \item{nclass}{ number of distance classes. If not specified, Sturge's rule will be used
 to determine an appropriate number of classes. }
   \item{stepsize}{ width of each distance class. If not specified, nclass and the range of space.d will be used to calculate an appropriate default. }
@@ -31,7 +32,7 @@ species composition) at a particular lag distance.
 }
 \value{
 	Returns a matrix with one row for each distance class and 6 columns:
-  \item{dmax }{upper limit of the distance class.}
+  \item{lag }{midpoint of the distance class.}
   \item{ngroup }{number of distances in that class.}
   \item{mantelr }{Mantel r value.}
   \item{pval }{p-value for the test chosen.}

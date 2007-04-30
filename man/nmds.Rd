@@ -24,6 +24,7 @@ nmds(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, maxit 
 \value{
   \item{conf }{list of configurations.}
   \item{stress }{list of final stress values.}
+  \item{r2 }{total variance explained by each configuration.}
 
   The first results are for the lowest number of dimensions (total number is (mindim - maxdim + 1) * nits).
 

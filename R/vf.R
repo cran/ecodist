@@ -2,13 +2,11 @@ vf <- function(ord, vars, nperm = 100)
 {
 # vector fitting of environmental variables to an ordination
 
-
+###
 vfcalc <- function(ord, vars)
 {
-        lm.list <- apply(vars, 2, function(x, ord)
-        lm(x ~ ord), ord = ord)
-        coef.m <- sapply(lm.list, function(x)
-        unlist(x$coefficients))
+        lm.list <- apply(vars, 2, function(x, ord) lm(x ~ ord), ord = ord)
+        coef.m <- sapply(lm.list, function(x) unlist(x$coefficients))
         scores <- atan(coef.m[3,  ]/coef.m[2,  ])
         scores <- t(rbind(cos(scores), sin(scores)))
         scores <- abs(scores)
@@ -16,10 +14,11 @@ vfcalc <- function(ord, vars)
         cor.m <- sign(cor.m)
         scores <- scores * cor.m
         coef.m <- lapply(lm.list, summary)
-        r <- sapply(coef.m, function(x)
-        sqrt(unlist(x$r.squared)))
+        r <- sapply(coef.m, function(x) sqrt(unlist(x$r.squared)))
         list(scores = scores, r = r)
 }
+
+###
 
         ord <- as.matrix(ord)
 		  vars <- as.matrix(vars)

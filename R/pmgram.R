@@ -1,4 +1,4 @@
-pmgram <- function(data, space, partial, nclass, stepsize, resids = FALSE, nperm = 1000)
+pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALSE, nperm = 1000)
 
 {
 
@@ -35,22 +35,31 @@ pmgram <- function(data, space, partial, nclass, stepsize, resids = FALSE, nperm
 #	3 piecewise mgram
 #	4 two-sided p-value
 
+# use breaks if it exists.
 # If nclass or stepsize aren't specified, use Sturge's rule to calculate nclass
 # classes are shifted so that they don't have to start with zero
-	if(missing(nclass)) {
-		if(missing(stepsize)) {
-			nclass <- round(1 + 3.3 * log10(length(space)))
-			stepsize <- (max(space) - min(space)) / nclass
-		} else {
-			nclass <- round((max(space) - min(space))/stepsize)
-		}
-	} else {
-		if(missing(stepsize)) {
-			stepsize <- (max(space) - min(space)) / nclass
-		}
-	}
+    if(missing(breaks)) {
+      if(missing(nclass)) {
+         if(missing(stepsize)) {
+            nclass <- round(1 + 3.3 * log10(length(space)))
+            stepsize <- (max(space) - min(space)) / nclass
+         } else {
+            nclass <- round((max(space) - min(space))/stepsize)
+         }
+      } else {
+         if(missing(stepsize)) {
+            stepsize <- (max(space) - min(space)) / nclass
+         }
+      }
+      breaks <- seq(0, stepsize * nclass, stepsize)
+   }
+    else {
+        nclass <- length(breaks) - 1
+    }
 
 	answer.m <- matrix(0, nrow=nclass, ncol=4)
+	dimnames(answer.m) <- list(NULL, c("lag", "ngroup", "piecer", "pval"))
+   answer.m[,4] <- rep(0, nrow(answer.m))
 
 # standardize so mean = 0, variance = 1
 	for(i in 1:ncol(data)) {
@@ -77,9 +86,10 @@ mgresids <- rep(0, length(space))
 	if(missing(partial)) {
 		if(ncol(data) == 1) {
 			for(i in 1:nclass) {
-				dmin <- (i - 1) * stepsize + min(space) - epsilon
-				dmax <- i * stepsize + min(space)
-				answer.m[i,1] <- dmax
+            dmin <- breaks[i]
+            dmax <- breaks[i + 1]
+         
+				answer.m[i,1] <- (dmin + dmax) / 2
 	
 				space.dclass <- rep(0, length(space))
 				space.dclass[space <= dmin] <- 1
@@ -253,7 +263,6 @@ mgresids <- rep(0, length(space))
 		}
 	}
 
-	dimnames(answer.m) <- list(NULL, c("dmax", "ngroup", "piecer", "pval"))
 
 	if(resids == TRUE)
 		list(answer.m = answer.m, resids = mgresids)

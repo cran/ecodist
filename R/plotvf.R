@@ -1,4 +1,4 @@
-plotvf <- function(x, cex=.8, ascale=.9, ...)
+plotvf <- function(x, pval = 1, cex=.8, ascale=.9, ...)
 {
 # add vector fitting arrows to an existing ordination plot
 # x is output from vf
@@ -8,10 +8,12 @@ plotlim <- par()$usr
 plotlim <- min((plotlim[2]-plotlim[1]), (plotlim[4]-plotlim[3]))
 ascale <- ascale * (plotlim/2)
 
+# only show variables with p-values less than pval
+x <- x[x[,4] < pval,]
 
     for (i in 1:dim(x)[[1]]) {
         arrows(0, 0, x[i, 1] * x[i,3] * ascale, x[i, 2] * x[i,3] * ascale, ...)
     }
-    text(x[, 1] * x[,3] * (ascale+.1), x[, 2] * x[,3]*(ascale+.1), dimnames(x)[[1]], cex = cex, ...)
+    text(x[, 1] * x[,3] * (ascale * 1.1), x[, 2] * x[,3]*(ascale * 1.1), dimnames(x)[[1]], cex = cex, ...)
 }
 

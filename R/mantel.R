@@ -29,6 +29,9 @@ mantel <- function(formula = formula(data), data = sys.parent(), nperm = 1000, m
 # nboot is the number of iterations.
 # pboot is the level to resample at.
 # cboot is the desired confidence limit.
+# NOTE: This is not bootstrapping with replacement. That doesn't make
+# much sense for dissimilarities because of the possibility of duplicates.
+# The dissimilarity between a sample and itself is always zero.
 #
 # mantel returns a five-element list:
 # mantelr is the correlation.
