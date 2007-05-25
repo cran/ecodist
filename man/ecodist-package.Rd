@@ -13,8 +13,8 @@ spatial and community data.
 \details{
 \tabular{ll}{
 Package: \tab ecodist\cr
-Version: \tab 1.00\cr
-Date: \tab 2006-03-02\cr
+Version: \tab 1.1.2\cr
+Date: \tab 2006-05-25\cr
 Depends: \tab stats\cr
 License: \tab GPL version 2 or newer\cr
 Packaged: \tab Mon Mar 27 10:50:11 2006; sarahg\cr
@@ -36,8 +36,8 @@ mgram                   Mantel correlogram
 nmds                    Non-metric multidimensional scaling
 nmds.min                Find minimum stress configuration
 pco                     Principal coordinates analysis
-plotmgram               Plot a Mantel correlogram
-plotvf                 Plots fitted vectors onto an ordination diagram
+plot.mgram               Plot a Mantel correlogram
+plot.vf                 Plots fitted vectors onto an ordination diagram
 pmgram                  Partial Mantel correlogram
 vf                      Vector fitting
 }
@@ -76,7 +76,7 @@ plot(iris.nmin, pch=as.numeric(iris[,5]))
 
 # Fit vectors for the main variables to the NMDS configuration
 iris.vf <- vf(iris.nmin, iris[,1:4], nperm=10)
-plotvf(iris.vf, col="blue")
+plot(iris.vf, col="blue")
 
 
 ## PCO example
@@ -114,7 +114,7 @@ z <- as.vector(z)
 space.d <- distance(space, "eucl")
 z.d <- distance(z, "eucl")
 z.mgram <- mgram(z.d, space.d, nperm=0)
-plotmgram(z.mgram)
+plot(z.mgram)
 
 
 ## Partial Mantel correlogram example
@@ -141,7 +141,7 @@ space.d <- distance(space, "eucl")
 # take partial correlogram of z2 on the residuals of z1 ~ space.d
 z.pmgram <- pmgram(z1.d, space.d, z2.d, nperm=0)
 par(mfrow=c(1,1))
-plotmgram(z.pmgram, pval=0.1)
+plot(z.pmgram, pval=0.1)
 
 }
 

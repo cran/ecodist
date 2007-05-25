@@ -1,23 +1,26 @@
-\name{nmds.min}
-\alias{nmds.min}
-\title{ Find minimum stress configuration }
+\name{plot.vf}
+\alias{plot.vf}
+\title{ Plots fitted vectors onto an ordination diagram }
 \description{
-  Finds minimum stress configuration from output of nmds()
+Add vector fitting arrows to an existing ordination plot.
 }
 \usage{
-nmds.min(x, dims = 0)
+\method{plot}{vf}(x, pval = 1, cex = 0.8, ascale = 0.9, ...)
 }
+%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{ output from nmds() }
-  \item{dims}{ desired dimensionality of result. If dims == 0 (the default) then the overall minimum stress configuration is chosen. }
+  \item{x}{ an object of S3 class \code{vf}, created by \code{vf()} }
+  \item{pval}{ optional, critical p-value for choosing variables to plot }
+  \item{cex}{ text size }
+  \item{ascale}{ optional, proportion of plot area to use when calculating arrow length }
+  \item{\dots}{ optional, other graphics parameters }
 }
 \value{
-  Configuration of minimum stress ordination (dataframe of
-coordinates).
-}
+  Adds arrows to an existing ordination plot. Only arrows with a p-value less than pval are added. By default, all variables are shown.
+  }
 \author{ Sarah Goslee, Sarah.Goslee@ars.usda.gov }
 
-\seealso{ \code{\link{nmds}} }
+\seealso{ \code{\link{vf}}}
 \examples{
 
 \dontrun{
@@ -39,5 +42,7 @@ plot(iris.nmin, pch=as.numeric(iris[,5]))
 iris.vf <- vf(iris.nmin, iris[,1:4], nperm=10)
 plot(iris.vf, col="blue")
 }
+
 }
 \keyword{ multivariate }
+\keyword{ hplot }

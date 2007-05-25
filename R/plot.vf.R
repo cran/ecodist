@@ -1,4 +1,4 @@
-plotvf <- function(x, pval = 1, cex=.8, ascale=.9, ...)
+plot.vf <- function(x, pval = 1, cex=.8, ascale=.9, ...)
 {
 # add vector fitting arrows to an existing ordination plot
 # x is output from vf

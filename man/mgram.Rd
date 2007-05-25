@@ -31,27 +31,38 @@ The Mantel r represents the dissimilarity in variable composition  (often
 species composition) at a particular lag distance.
 }
 \value{
-	Returns a matrix with one row for each distance class and 6 columns:
+	Returns an object of class mgram, which is a list with two elements.
+    mgram is a matrix with one row for each distance class and 6 columns:
   \item{lag }{midpoint of the distance class.}
   \item{ngroup }{number of distances in that class.}
   \item{mantelr }{Mantel r value.}
   \item{pval }{p-value for the test chosen.}
   \item{llim }{lower bound of confidence limit for mantelr.}
   \item{ulim }{upper bound of confidence limit for mantelr.}
+  resids is NA for objects calculated by mgram().
 }
 \references{ Legendre, P. and M. Fortin. 1989. Spatial pattern and ecological analysis. 
 Vegetatio 80:107-138. }
 \author{ Sarah Goslee, Sarah.Goslee@ars.usda.gov }
 
-\seealso{ \code{\link{mantel}}, \code{\link{plotmgram}}, \code{\link{pmgram}} }
+\seealso{ \code{\link{mantel}}, \code{\link{plot.mgram}}, \code{\link{pmgram}} }
 \examples{
 \dontrun{
-z.mgram <- mgram(z.d, space.d)
-plotmgram(z.mgram)
-}
 
-# A full example is available in the Mantel correlogram 
-# section of the main help file for \link{ecodist}.
+# generate a simple surface
+x <- matrix(1:10, nrow=10, ncol=10, byrow=FALSE)
+y <- matrix(1:10, nrow=10, ncol=10, byrow=TRUE)
+z <- x + 3*y
+image(z)
+
+# analyze the pattern of z across space
+space <- cbind(as.vector(x), as.vector(y))
+z <- as.vector(z)
+space.d <- distance(space, "eucl")
+z.d <- distance(z, "eucl")
+z.mgram <- mgram(z.d, space.d, nperm=0)
+plot(z.mgram)
+}
 
 }
 \keyword{ multivariate }% at least one, from doc/KEYWORDS

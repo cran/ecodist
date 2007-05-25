@@ -36,8 +36,5 @@ iris.pco <- pco(iris.md)
 plot(iris.pco$vectors[,1], iris.pco$vectors[,2], pch=as.numeric(iris[,5]))
 }
 
-# A full example is available in the PCO 
-# section of the main help file for \link{ecodist}.
-
 }
 \keyword{ multivariate }

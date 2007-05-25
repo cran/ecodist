@@ -81,7 +81,12 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 		}
 	}
 
-mgresids <- rep(0, length(space))
+   if(resids) {
+      mgresids <- rep(0, length(space))
+   }
+   else {
+      mgresids <- NA
+   }
 
 	if(missing(partial)) {
 		if(ncol(data) == 1) {
@@ -263,11 +268,8 @@ mgresids <- rep(0, length(space))
 		}
 	}
 
-
-	if(resids == TRUE)
-		list(answer.m = answer.m, resids = mgresids)
-	else
-		answer.m
-
+   results <- list(mgram = answer.m, resids = mgresids)
+   class(results) <- "mgram"
+   results
 }
 

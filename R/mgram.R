@@ -74,8 +74,8 @@ mgram <- function(species.d, space.d, breaks, nclass, stepsize, nperm = 1000, mr
 
 	}
 
-
-answer.m
-
+   results <- list(mgram = answer.m, resids = NA)
+   class(results) <- "mgram"
+   results
 }
 

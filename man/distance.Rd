@@ -34,8 +34,5 @@ Partial matching will work for selecting a method.
 data(iris)
 iris.md <- distance(iris[,1:4], "mahal")
 }
-
-# A full example is available in the distance 
-# section of the main help file for \link{ecodist}.
 }
 \keyword{ multivariate }

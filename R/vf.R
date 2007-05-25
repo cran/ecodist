@@ -43,5 +43,6 @@ vfcalc <- function(ord, vars)
         vfres <- cbind(vf1$scores, vf1$r, pval)
         dimnames(vfres)[[1]] <- dimnames(vars)[[2]]
         dimnames(vfres)[[2]] <- c(1:ncol(ord), "r", "pval")
+        class(vfres) <- "vf"
         vfres
 }

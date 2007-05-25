@@ -128,7 +128,7 @@ secondonly <- function(x)
 x <- as.matrix(x)
 
 ## code borrowed from dist()
-    METHODS <- c("euclidean", "bray-curtis", "manhattan", "mahalanobis", "jaccard")
+    METHODS <- c("euclidean", "bray-curtis", "manhattan", "mahalanobis", "jaccard", "difference")
 
     method <- pmatch(method, METHODS)
     if (is.na(method)) 
@@ -183,6 +183,12 @@ if(method == 5)
 	 C <- secondonly(x)
 	 C <- apply(C, 1:2, sum)
 	 D <- 1 - A / (A + B + C)
+}
+
+if(method == 6)
+{
+# simple difference, NOT symmetric
+D <- paireddiff(x)[,,1, drop=TRUE]
 }
 	 
 

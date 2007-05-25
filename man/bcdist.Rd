@@ -22,10 +22,9 @@ distances are calculated. Otherwise, the distance between two empty rows is assu
 \examples{
 \dontrun{
 data(iris)
-iris.bc <- bcdist(iris[,1:4], "mahal")
+iris.bc <- bcdist(iris[,1:4])
+# equivalent to
+iris.bc2 <- distance(iris[,1:4], "bray-curtis")
 }
-
-# A full example is available in the distance 
-# section of the main help file for \link{ecodist}.
 }
 \keyword{ multivariate }

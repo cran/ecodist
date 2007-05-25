@@ -54,11 +54,8 @@ iris.model <- distance(as.numeric(iris[,5]), "eucl")
 iris.model[iris.model > 0] <- 1
 
 # Test whether samples within the same species are more similar than those not
-mantel(iris.md ~ iris.model)
+mantel(iris.md ~ iris.model, nperm=10000)
 }
-
-# A full example is available in the Mantel test 
-# section of the main help file for \link{ecodist}.
 }
 
 \keyword{ multivariate }
