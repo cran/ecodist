@@ -30,9 +30,7 @@ Partial matching will work for selecting a method.
 
 \seealso{ \code{\link{dist}} }
 \examples{
-\dontrun{
 data(iris)
 iris.md <- distance(iris[,1:4], "mahal")
-}
 }
 \keyword{ multivariate }

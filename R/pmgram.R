@@ -133,8 +133,8 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 		}
 		else {
 			for(i in 1:nclass) {
-				dmin <- (i - 1) * stepsize + min(space) - epsilon
-				dmax <- i * stepsize + min(space)
+            dmin <- breaks[i]
+            dmax <- breaks[i + 1]
 				answer.m[i,1] <- dmax
 	
 				space.dclass <- rep(0, length(space))
@@ -184,8 +184,8 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 	else {
 		if(ncol(data) == 1) {
 			for(i in 1:nclass) {
-				dmin <- (i - 1) * stepsize + min(space) - epsilon
-				dmax <- i * stepsize + min(space)
+            dmin <- breaks[i]
+            dmax <- breaks[i + 1]
 				answer.m[i,1] <- dmax
 	
 				space.dclass <- rep(0, length(space))
@@ -222,8 +222,8 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 		}
 		else {
 			for(i in 1:nclass) {
-				dmin <- (i - 1) * stepsize + min(space) - epsilon
-				dmax <- i * stepsize + min(space)
+            dmin <- breaks[i]
+            dmax <- breaks[i + 1]
 				answer.m[i,1] <- dmax
 	
 				space.dclass <- rep(0, length(space))

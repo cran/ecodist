@@ -13,12 +13,10 @@ spatial and community data.
 \details{
 \tabular{ll}{
 Package: \tab ecodist\cr
-Version: \tab 1.1.2\cr
-Date: \tab 2006-05-25\cr
+Version: \tab 1.1.3\cr
+Date: \tab 2007-10-05\cr
 Depends: \tab stats\cr
 License: \tab GPL version 2 or newer\cr
-Packaged: \tab Mon Mar 27 10:50:11 2006; sarahg\cr
-Built: \tab R 2.2.1; i686-redhat-linux-gnu; 2006-03-27 10:54:52; unix\cr
 }
 
 Index:
@@ -66,8 +64,9 @@ plot(iris.md, iris.bc, xlab="Mahalanobis", ylab="Bray-Curtis")
 # Example of multivariate analysis using built-in iris dataset
 
 # Minimum-stress 2-dimensional nonmetric multidimensional scaling configuration
-# Uses small number of separate ordinations (5) to increase speed of example.
-# Use more for final analysis.
+# Uses only 3 starting configuration to increase speed of example.
+# Use more for final analysis to make it more likely that you find the
+# global minimum configuration.
 iris.nmds <- nmds(iris.md, mindim=2, maxdim=2, nits=3)
 iris.nmin <- nmds.min(iris.nmds)
 
@@ -75,7 +74,8 @@ iris.nmin <- nmds.min(iris.nmds)
 plot(iris.nmin, pch=as.numeric(iris[,5]))
 
 # Fit vectors for the main variables to the NMDS configuration
-iris.vf <- vf(iris.nmin, iris[,1:4], nperm=10)
+# Use more permutations for analysis and publication.
+iris.vf <- vf(iris.nmin, iris[,1:4], nperm=50)
 plot(iris.vf, col="blue")
 
 
@@ -95,9 +95,9 @@ iris.model <- distance(as.numeric(iris[,5]), "eucl")
 iris.model[iris.model > 0] <- 1
 
 # Test whether samples within the same species are more similar than those not
-# Use very low numbers of permutations to increase speed.
+# Use very low numbers of permutations to increase speed of example.
 # Use many permutations for final analyses!
-mantel(iris.md ~ iris.model, nperm=100, nboot=0)
+mantel(iris.md ~ iris.model, nperm=50, nboot=0)
 
 
 ## Mantel correlogram example

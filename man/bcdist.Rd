@@ -20,11 +20,9 @@ distances are calculated. Otherwise, the distance between two empty rows is assu
 
 \seealso{ \code{\link{dist}} }
 \examples{
-\dontrun{
 data(iris)
 iris.bc <- bcdist(iris[,1:4])
 # equivalent to
 iris.bc2 <- distance(iris[,1:4], "bray-curtis")
-}
 }
 \keyword{ multivariate }
