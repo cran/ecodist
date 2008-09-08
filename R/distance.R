@@ -6,6 +6,7 @@ distance <- function(x, method="euclidean")
 ###
 # Sarah Goslee
 # 2 March 2006
+# revised 31 March 2008
 ### 
 # uses clever matrix math to calculate the pieces needed
 # by dissimilarity matrices, to make it easy to add new
@@ -22,10 +23,14 @@ distance <- function(x, method="euclidean")
 # 3: manhattan
 # 4: mahalanobis
 # 5: jaccard
+# 6: simple difference
+# 7: sorensen
 
 pairedsum <- function(x)
 {
 	### paired sums
+   ### returns an N by N by P matrix containing each
+   ### combination of 
     N <- nrow(x)
 	 P <- ncol(x)
 	 A <- numeric(N * N * P)
@@ -128,7 +133,7 @@ secondonly <- function(x)
 x <- as.matrix(x)
 
 ## code borrowed from dist()
-    METHODS <- c("euclidean", "bray-curtis", "manhattan", "mahalanobis", "jaccard", "difference")
+    METHODS <- c("euclidean", "bray-curtis", "manhattan", "mahalanobis", "jaccard", "difference", "sorensen")
 
     method <- pmatch(method, METHODS)
     if (is.na(method)) 
@@ -189,6 +194,18 @@ if(method == 6)
 {
 # simple difference, NOT symmetric
 D <- paireddiff(x)[,,1, drop=TRUE]
+}
+
+if(method == 6)
+{
+# Sorensen distance
+    A <- jointpresence(x)
+	 A <- apply(A, 1:2, sum)
+	 B <- firstonly(x)
+	 B <- apply(B, 1:2, sum)
+	 C <- secondonly(x)
+	 C <- apply(C, 1:2, sum)
+	 D <- 1 - (2*A) / (2*A + B + C)
 }
 	 
 

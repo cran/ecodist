@@ -9,7 +9,7 @@ corgen(len, x, r, population = FALSE, epsilon = 0)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{len}{ Length of data vectors. }
-  \item{x}{ Independent data. }
+  \item{x}{ Independent data. If x is specified, the population parameter is automatically set to TRUE. }
   \item{r}{ Correlation between data vectors. }
   \item{population}{ TRUE for vectors drawn from two populations with correlation r, otherwise r is the sample correlation. }
   \item{epsilon}{ If epsilon = 0, it has no effect, otherwise the sampling process is repeated until the sample correlation is within epsilon of r. This option allows the production of exactly-correlated data, within the limits of epsilon. Setting epsilon > 0 invalidates the population setting; data will be correlated within that range, rather than sampled from that population. }
@@ -20,21 +20,24 @@ corgen(len, x, r, population = FALSE, epsilon = 0)
   ...
 }
 \details{
-    Either x or len must be specified. If x is given, population must be TRUE, otherwise x is only used as the basis for generating uncorrelated starting data.
-    This function has additional capabilities than the corgen function available in the stats package.
+    Either x or len must be specified.
+    This function has additional capabilities beyond the corgen function available in the stats package.
 }
 \author{ Sarah Goslee }
 
-}
 \examples{
 
 # create two random variables of length 100 with correlation 
 # of 0.10 +/- 0.01
-corgen(len=100, r=.1, epsilon=0.01)
+xy <- corgen(len=100, r=.1, epsilon=0.01)
 
-# create a variable y drawn from a population with the given correlation to x
+# create two random variables of length 100 drawn from a population with 
+# a correlation of -0.82
+xy <- corgen(len=100, r=-0.82, population=TRUE)
+
+# create a variable y within 0.01 of the given correlation to x
 x <- 1:100
-y <- corgen(x=x, r=.25, population=FALSE)$y
+y <- corgen(x=x, r=.5, epsilon=.01)$y
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

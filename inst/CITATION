@@ -3,7 +3,7 @@ citHeader("To cite package ecodist in publications use:")
 citEntry(entry="Article",
 	title = "The ecodist package for dissimilarity-based analysis of ecological data",
 	author = personList(as.person("Sarah C. Goslee"),
-                        as.person("Dean L. Urban"))
+                        as.person("Dean L. Urban")),
 	journal = "Journal of Statistical Software",
 	year	 = 2007,
 	volume = 22,

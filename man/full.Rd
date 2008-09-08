@@ -13,6 +13,7 @@ full(v)
 \details{
   Converts lower-triangular distance matrix as written by R/S-Plus functions 
 into a symmetric matrix.
+  Note that lower() used on a 1x1 matrix will return the single element, which may not be the correct behavior in all cases, while full() used on a single element will return a 2x2 matrix.
 }
 \value{
  a full symmetric matrix.

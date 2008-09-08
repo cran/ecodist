@@ -228,5 +228,5 @@ mantel <- function(formula = formula(data), data = sys.parent(), nperm = 1000, m
                 llim <- 0
                 ulim <- 0
         }
-        unlist(list(mantelr = mantelr, pval1 = pval1, pval2 = pval2, pval3 = pval3, llim = llim, ulim = ulim))
+        c(mantelr = mantelr, pval1 = pval1, pval2 = pval2, pval3 = pval3, llim = llim, ulim = ulim)
 }

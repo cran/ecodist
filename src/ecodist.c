@@ -1,5 +1,6 @@
 #include <S.h>
 #include <math.h>
+#include <R_ext/Applic.h> /* for dgemm */
 
 #define RANDIN  seed_in((long *)NULL)
 #define RANDOUT seed_out((long *)NULL)
@@ -1051,4 +1052,135 @@ ncol = *pncol;
 }
 
 }
+
+
+void mrmperm(double *x, double *y, int *p, int *nd, int *n, int *nperm, double *r2all, double *ball, double *fall, double *tmat, int *rarray, double *XX, double *XY, double *YY, double *b)
+
+{
+
+int i, k, l;
+int m;
+int temp;
+double SSE=0.0, SSTO=0.0, SSR=0.0;
+double r2=0, f=0;
+double btemp=0.0;
+int bcount = 0;
+char *transt = "T", *transn = "N";
+double one = 1.0, zero = 0.0;
+int onei = 1;
+
+S_EVALUATOR
+
+/* Set random seed using Splus function */
+
+RANDIN;
+
+/* Start permutation routine */
+for(i = 0; i < *nperm; i++) {
+
+/* first do the unpermuted values */
+
+/*	F77_CALL(dgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
+			x, &nrx, y, &nry, &zero, z, &ncx); */
+
+/* take crossproduct t(X) %*% Y - WORKS */
+    F77_CALL(dgemm)(transt, transn, 
+            p, &onei, nd, 
+            &one, x, nd, y, nd, 
+            &zero, XY, p);
+
+/* take crossproduct t(Y) %*% (Y) - WORKS */
+    F77_CALL(dgemm)(transt, transn, 
+            &onei, &onei, nd, 
+            &one, y, nd, y, nd, 
+            &zero, YY, &onei);
+
+/* calculate regression coefficients XX %*% XY - WORKS */
+    F77_CALL(dgemm)(transn, transn, 
+            p, &onei, p, 
+            &one, XX, p, XY, p, 
+            &zero, b, p);
+
+/* calculate regression components - WORKS */
+    F77_CALL(dgemm)(transt, transn, 
+            &onei, &onei, p, 
+            &one, b, p, XY, p, 
+            &zero, &btemp, &onei);
+
+/* SSE - WORKS */    
+    SSE = YY[0] - btemp;
+
+/* SSTO - WORKS */  
+    SSTO = 0;
+    for(k = 0; k < *nd; k++) {
+        SSTO = SSTO + y[k];
+    }
+    SSTO = YY[0] - (SSTO * SSTO) / *nd;
+
+    SSR = SSTO - SSE;
+
+    /* calculate R2 - WORKS */
+    r2 = 1 - SSE / SSTO;
+
+    /* calculate F* - WORKS */
+    f = (SSR / (*p - 1)) / (SSE / (*nd - *p));
+
+    r2all[i] = r2;
+    fall[i] = f;
+
+    /* calculate pseudo-t for regression coefficients - WORKS*/
+    /* b / sqrt(1 - R2) */
+    for(k=0; k<*p; k++) {
+        ball[bcount] = b[k] / sqrt(1 - r2);
+        bcount++;
+    }
+
+
+/* permute Y */
+/* Set up rarray. */
+
+   for(k = 0; k < *n; k++) {
+      rarray[k] = k;
+   }
+
+/* Convert y to a full matrix. */
+
+   m = 0;
+   for(k = 1; k < *n; k++) {
+      for(l = 0; l < k; l++) {
+         tmat[k * *n + l] = y[m];
+         tmat[l * *n + k] = y[m];
+         m++;
+      }
+   }
+
+/* Randomize rarray using an Splus function. */
+
+   for(k = 0; k < (*n - 1); k++) {
+      l = *n - k - 1;
+      m = (int)((float)l * UNIF);
+      if(m > l) m = l;
+      temp = rarray[l];
+      rarray[l] = rarray[m];
+      rarray[m] = temp;
+   }
+
+/* Reorder y. */
+
+   m = 0;
+   for(k = 1; k < *n; k++) {
+      for(l = 0; l < k; l++) {
+         y[m] = tmat[rarray[k] * *n + rarray[l]];
+         m++;
+      }
+   }
+
+}
+
+/* Reset random seed using an Splus function. */
+
+RANDOUT;
+
+}
+
 

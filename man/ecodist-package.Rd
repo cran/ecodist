@@ -13,8 +13,8 @@ spatial and community data.
 \details{
 \tabular{ll}{
 Package: \tab ecodist\cr
-Version: \tab 1.1.3\cr
-Date: \tab 2007-10-05\cr
+Version: \tab 1.1.4\cr
+Date: \tab 2007-10-17\cr
 Depends: \tab stats\cr
 License: \tab GPL version 2 or newer\cr
 }
@@ -24,6 +24,7 @@ Index:
 bcdist                  Bray-Curtis distance
 cor2m                   Generates a correlation table between the
                         variables of 2 matrices
+corgen                  Generate correlated data
 crosstab                Data formatting
 distance                Calculate dissimilarity/distance metrics
 fixdmat                 Distance matrix conversion
@@ -34,8 +35,8 @@ mgram                   Mantel correlogram
 nmds                    Non-metric multidimensional scaling
 nmds.min                Find minimum stress configuration
 pco                     Principal coordinates analysis
-plot.mgram               Plot a Mantel correlogram
-plot.vf                 Plots fitted vectors onto an ordination diagram
+plot.mgram              Plot a Mantel correlogram
+plot.vf                 Plot fitted vectors onto an ordination diagram
 pmgram                  Partial Mantel correlogram
 vf                      Vector fitting
 }
@@ -46,6 +47,7 @@ Sarah Goslee and Dean Urban
 Maintainer: Sarah Goslee <Sarah.Goslee@ars.usda.gov>
 }
 \references{
+Goslee, S.C. and Urban, D.L. 2007. The ecodist package for dissimilarity-based analysis of ecological data. Journal of Statistical Software 22(7):1-19.
 }
 \keyword{ multivariate }
 \examples{

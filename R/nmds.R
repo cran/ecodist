@@ -97,8 +97,8 @@ for(i in mindim:maxdim) {
       nmdsr <- nmdscalc(dmat, ndim = i, iconf, epsilon, maxit, trace)
       conf[[k]] <- nmdsr$conf
       stress[[k]] <- nmdsr$stress
-      k <- k + 1
       r2[[k]] <- cor(dmat, dist(nmdsr$conf)) ^ 2
+      k <- k + 1
    }
 }
 
