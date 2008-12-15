@@ -4,6 +4,7 @@
 \title{ Calculate dissimilarity/distance metrics }
 \description{
   This function calculates a variety of dissimilarity or distance metrics. Although it duplicates the functionality of dist() and bcdist(), it is written entirely in R, and can easily be extended to include additional metrics.
+  distance() was written for extensibility and understandability, and is not an efficient choice for use with large matrices.
 }
 \usage{
 distance(x, method = "euclidean")
@@ -12,12 +13,14 @@ distance(x, method = "euclidean")
 \arguments{
   \item{x}{ matrix or data frame with rows as samples and columns as variables (such as 
 species). Distances will be calculated for each pair of rows. }
-  \item{method}{ Currently 5 dissimilarity metrics can be calculated: 
+  \item{method}{ Currently 7 dissimilarity metrics can be calculated: 
 euclidean
 bray-curtis
 manhattan
 mahalanobis
 jaccard
+simple difference
+sorensen
 Partial matching will work for selecting a method.
   }
 }

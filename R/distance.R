@@ -7,6 +7,7 @@ distance <- function(x, method="euclidean")
 # Sarah Goslee
 # 2 March 2006
 # revised 31 March 2008
+# bug-fix 15 December 2008
 ### 
 # uses clever matrix math to calculate the pieces needed
 # by dissimilarity matrices, to make it easy to add new
@@ -196,7 +197,7 @@ if(method == 6)
 D <- paireddiff(x)[,,1, drop=TRUE]
 }
 
-if(method == 6)
+if(method == 7)
 {
 # Sorensen distance
     A <- jointpresence(x)
