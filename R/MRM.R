@@ -27,6 +27,13 @@ stop("Matrix not square.\n")
         m <- apply(m, 2, rank)
     }
 
+    # convert matrices to column order to ensure compatibility with C
+    for(thiscol in 1:ncol(m)) {
+        tempmat <- full(m[,thiscol])
+        m[,thiscol] <- tempmat[col(tempmat) > row(tempmat)]
+    }
+
+
     # use matrix form to speed up calculations
     X <- m[ ,2:ncol(m), drop=FALSE]
     X <- cbind(rep(1, nrow(X)), X)
@@ -89,9 +96,8 @@ stop("Matrix not square.\n")
         F.all <- cresults$F.all
         F.pval <- length(F.all[F.all >= F.all[1]])/nperm
 
+        # b.all contains pseudo-t of Legendre et al. 1994
         b.all <- matrix(cresults$b.all, nrow=nperm, ncol=p, byrow=TRUE)
-        # for regression coefficients, use pseudo-t of Legendre et al. 1994
-        b.all <- sweep(b.all, 1, sqrt(1 - R2.all), FUN="/")
         b.pval <- apply(b.all, 2, function(x)length(x[abs(x) >= abs(x[1])])/nperm)
 }
 

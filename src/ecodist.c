@@ -140,7 +140,6 @@ for(i = 1; i < *nperm; i++) {
    }
 
 /* Convert x to a full matrix. */
-
    m = 0;
    for(k = 1; k < *n; k++) {
       for(l = 0; l < k; l++) {
@@ -149,6 +148,7 @@ for(i = 1; i < *nperm; i++) {
          m++;
       }
    }
+
 
 /* Randomize rarray using an Splus function. */
 
@@ -161,7 +161,8 @@ for(i = 1; i < *nperm; i++) {
       rarray[m] = temp;
    }
 
-/* Reorder x. */
+
+/* Reorder x and take lower triangle. */
 
    m = 0;
    for(k = 1; k < *n; k++) {
@@ -254,7 +255,7 @@ for(i = 1; i < *nperm; i++) {
    }
 
 
-/* Reorder y. */
+/* Reorder y and take lower triangle. */
 
    m = 0;
    for(k = 1; k < *n; k++) {
@@ -328,289 +329,6 @@ RANDOUT;
 }
 
 
-void xbootstrap(double *x, double *y, int *n, int *xlen, int *nboot, double *pboot, double *bootcor, int *rarray, int *rmat, double *xdif, double *ydif)
-
-{
-
-int i, j, k;
-double r;
-double nsamp;
-double xmean, ymean;
-double xsum;
-double xxsum, yysum;
-
-S_EVALUATOR
-
-/* Set random seed using Splus function */
-
-RANDIN;
-
-
-for(i = 0; i < *nboot; i++) {
-
-/* Set up rarray. */
-
-   for(j = 0; j < *n; j++) {
-      r = UNIF;
-      if(r > *pboot)
-         rarray[j] = 0;
-      else rarray[j] = 1;
-   }
-
-/* Turn rarray into a square sampling matrix. */
-/* 1 means include, 0 means omit. */
-
-   for(j = 0; j < *xlen; j++) {
-      rmat[j] = 1;
-   }
-
-   for(j = 0; j < *n; j++) {
-      for(k = 0; k <= j; k++) {
-         if(rarray[j] == 0 || rarray[k] == 0) {
-            rmat[j * *n + k] = 0;
-            rmat[k * *n + j] = 0;
-         }
-      }
-   }
-
-   nsamp = 0;
-   for(j = 0; j < *xlen; j++) {
-      nsamp += rmat[j];
-   }
-
-
-/* Calculate means for x and y. */
-
-   xmean = 0;
-   ymean = 0;
-   for(j = 0; j < *xlen; j++) {
-      if(rmat[j] == 1) {
-         xmean += x[j];
-         ymean += y[j];
-      }
-   }
-   xmean = xmean/nsamp;
-   ymean = ymean/nsamp;
-
-/* Calculate deviations for x and y. */
-
-   for(j = 0; j < *xlen; j++) {
-      if(rmat[j] == 1) {
-         xdif[j] = x[j] - xmean;
-         ydif[j] = y[j] - ymean;
-      }
-      else {
-         xdif[j] = 0;
-         ydif[j] = 0;
-      }
-   }
-
-
-   xsum = 0;
-   xxsum = 0; 
-   yysum = 0;
-
-   for(j = 0; j < *xlen; j++) {
-      if(rmat[j] == 1) {
-         xsum += (xdif[j] * ydif[j]);
-         xxsum += (xdif[j] * xdif[j]);
-         yysum += (ydif[j] * ydif[j]);
-      }
-   }
-
-   bootcor[i] = (xsum) / sqrt(xxsum * yysum);
-
-}
-
-/* Reset random seed using an Splus function. */
-
-RANDOUT;
-
-}
-
-
-
-void xpermute(double *x, double *y, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
-
-{
-
-int i, k, l, m;
-double cumsum;
-int temp;
-
-S_EVALUATOR
-
-/* Set random seed using Splus function */
-
-RANDIN;
-
-/* Calculate first z-statistic (unpermuted data). */
-
-cumsum = 0;
-
-for(k = 0; k < *xlen; k++) {
-   cumsum += x[k] * y[k];
-}
-
-zstats[0] = cumsum;
-
-
-/* Start permutation routine */
-
-for(i = 1; i < *nperm; i++) {
-
-/* Set up rarray. */
-
-   for(k = 0; k < *n; k++) {
-      rarray[k] = k;
-   }
-
-/* Randomize rarray using an Splus function. */
-
-   for(k = 0; k < (*n - 1); k++) {
-      l = *n - k - 1;
-      m = (int)((float)l * UNIF);
-      if(m > l) m = l;
-      temp = rarray[l];
-      rarray[l] = rarray[m];
-      rarray[m] = temp;
-   }
-
-/* Reorder x. */
-
-   for(k = 0; k < *n; k++) {
-      for(l = 0; l <= k; l++) {
-         x[k * *n + l] = tmat[rarray[k] * *n + rarray[l]];
-         x[l * *n + k] = tmat[rarray[l] * *n + rarray[k]];
-      }
-   }
-
-
-/* Calculate new sum of products. */
-
-   cumsum = 0;
-
-   for(k = 0; k < *xlen; k++) {
-         cumsum += x[k] * y[k];
-   
-   }
-
-   zstats[i] = cumsum;
-
-}
-
-/* Reset random seed using an Splus function. */
-
-RANDOUT;
-
-}
-
-
-
-
-void xpermpart(double *hmat, double *y, double *xcor, double *ycor, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
-
-{
-
-int i, k, l, m;
-double cumsum;
-int temp;
-
-S_EVALUATOR
-
-/* Set random seed using Splus function */
-
-RANDIN;
-
-/* Calculate residuals for y */
-
-for(k = 0; k < *xlen; k++) {
-   ycor[k] = 0;
-}
-
-
-for(k = 0; k < *xlen; k++) {
-   for(l = 0; l < *xlen; l++) {
-      ycor[k] = ycor[k] + hmat[k * *xlen + l] * y[l];
-   }
-}
-
-
-/* Calculate first z-statistic (unpermuted data). */
-
-cumsum = 0;
-
-for(k = 0; k < *xlen; k++) {
-   cumsum += xcor[k] * ycor[k];
-}
-
-zstats[0] = cumsum;
-
-
-/* Start permutation routine */
-
-for(i = 1; i < *nperm; i++) {
-
-/* Set up rarray. */
-
-   for(k = 0; k < *n; k++) {
-      rarray[k] = k;
-   }
-
-/* Randomize rarray using an Splus function. */
-
-   for(k = 0; k < (*n - 1); k++) {
-      l = *n - k - 1;
-      m = (int)((float)l * UNIF);
-      if(m > l) m = l;
-      temp = rarray[l];
-      rarray[l] = rarray[m];
-      rarray[m] = temp;
-   }
-
-/* Reorder y. */
-
-   for(k = 0; k < *n; k++) {
-      for(l = 0; l <= k; l++) {
-         y[k * *n + l] = tmat[rarray[k] * *n + rarray[l]];
-         y[l * *n + k] = tmat[rarray[l] * *n + rarray[k]];
-      }
-   }
-
-
-/* Calculate residuals for y */
-
-for(k = 0; k < *xlen; k++) {
-   ycor[k] = 0;
-}
-
-for(k = 0; k < *xlen; k++) {
-   for(l = 0; l < *xlen; l++) {
-      ycor[k] = ycor[k] + hmat[k * *xlen + l] * y[l];
-   }
-}
-
-
-/* Calculate new sum of products. */
-
-   cumsum = 0;
-
-   for(k = 0; k < *xlen; k++) {
-         cumsum += xcor[k] * ycor[k];
-   
-   }
-
-   zstats[i] = cumsum;
-
-}
-
-/* Reset random seed using an Splus function. */
-
-RANDOUT;
-
-}
-
-
 
 void bcdist(double *x, int *pnrow, int *pncol, double *dist)
 {
@@ -643,59 +361,6 @@ for(i = 0; i < (nrow - 1); i++) {
       dist[l] = (1 - (2 * minsum) / (sumi + sumj));
    l++;
    }
-}
-}
-
-
-void weight(int *n, double *datadist, double *d1, double *d2, double *w)
-
-{
-int i;
-double m1, m2;
-double w1, w2;
-double pi;
-
-pi = 2 * acos(0);
-
-for(i = 0; i < *n * *n; i++) {
-   if(datadist[i] != 0) {
-      if(d1[i] < datadist[i])
-         m1 = d1[i] / datadist[i];
-      else m1 = 1;
-
-      if(d2[i] < datadist[i])
-         m2 = d2[i] / datadist[i];
-      else m2 = 1;
-   }
-   else {
-      m1 = 0;
-      m2 = 0;
-   }
-
-   w1 = 1 - (acos(m1) + acos(m2)) / pi;
-
-   if(datadist[i] != 0) {
-      m1 = d1[i] / datadist[i];
-      if(m1 > 1)
-         m1 = 1;
-
-      m2 = d2[i] / datadist[i];
-      if(m2 > 1)
-         m2 = 1;
-   }
-   else {
-      m1 = 0;
-      m2 = 0;
-   }
-
-   w2 = 0.75 - (acos(m1) + acos(m2)) / (2 * pi);
-
-   if((datadist[i] * datadist[i]) >= (d1[i] * d1[i] + d2[i] * d2[i]))
-      w1 = 0;
-   if((datadist[i] * datadist[i]) < (d1[i] * d1[i] + d2[i] * d2[i]))
-      w2 = 0;
-
-   w[i] = w1 + w2;
 }
 }
 

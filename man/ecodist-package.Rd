@@ -13,8 +13,8 @@ spatial and community data.
 \details{
 \tabular{ll}{
 Package: \tab ecodist\cr
-Version: \tab 1.1.4\cr
-Date: \tab 2007-10-17\cr
+Version: \tab 1.2.2\cr
+Date: \tab 2011-04-02\cr
 Depends: \tab stats\cr
 License: \tab GPL version 2 or newer\cr
 }
