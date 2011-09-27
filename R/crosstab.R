@@ -1,4 +1,4 @@
-crosstab <- function(rowlab, collab, values, type="sum", allrows, allcols)
+crosstab <- function(rowlab, collab, values, type="sum", allrows, allcols, ...)
 
 {
 
@@ -25,10 +25,10 @@ rowlab <- as.vector(rowlab)
 collab <- as.vector(collab)
 
 results <- switch(type,
-	mean = tapply(values, list(rowlab, collab), mean),
-	max = tapply(values, list(rowlab, collab), max),
-	min = tapply(values, list(rowlab, collab), min),
-	sum = tapply(values, list(rowlab, collab), sum),
+	mean = tapply(values, list(rowlab, collab), mean, ...),
+	max = tapply(values, list(rowlab, collab), max, ...),
+	min = tapply(values, list(rowlab, collab), min, ...),
+	sum = tapply(values, list(rowlab, collab), sum, ...),
 )
 
 if(!missing(allrows)) {

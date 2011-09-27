@@ -1,4 +1,4 @@
-distance <- function(x, method="euclidean")
+distance <- function(x, method="euclidean", sprange=NULL, spweight=NULL)
 {
 # calculates similarity and dissimilarity coefficients
 # as described in Legendre and Legendre 1998
@@ -19,6 +19,15 @@ distance <- function(x, method="euclidean")
 # add the code at the appropriate point at the bottom of
 # the function
 
+###
+# Gower offers the option of dividing by the species range
+# if sprange=NULL no range is used
+# Euclidean, Manhattan, Gower allow weighting options
+# if spweight=NULL no weighting is used
+# if spweight="absence" then W is = 0 if both species are absent,
+#   and 1 otherwise, thus deleting joint absences
+
+### Available methods
 # 1: euclidean
 # 2: bray-curtis
 # 3: manhattan
@@ -26,6 +35,9 @@ distance <- function(x, method="euclidean")
 # 5: jaccard
 # 6: simple difference
 # 7: sorensen
+# 8: Gower
+# 9: Modified Gower base 10 (Anderson et al 2006)
+# 10: Modified Gower base 2 (Anderson et al 2006)
 
 pairedsum <- function(x)
 {
@@ -134,7 +146,7 @@ secondonly <- function(x)
 x <- as.matrix(x)
 
 ## code borrowed from dist()
-    METHODS <- c("euclidean", "bray-curtis", "manhattan", "mahalanobis", "jaccard", "difference", "sorensen")
+    METHODS <- c("euclidean", "bray-curtis", "manhattan", "mahalanobis", "jaccard", "difference", "sorensen", "gower", "modgower10", "modgower2")
 
     method <- pmatch(method, METHODS)
     if (is.na(method)) 
@@ -148,25 +160,52 @@ x <- as.matrix(x)
 if(method == 1) 
 {
 # Euclidean distance
-   A <- paireddiff(x)
-	D <- sqrt(apply(A, 1:2, function(x)sum(x * x)))
+    A <- paireddiff(x)
+    if(is.null(spweight)) {
+	    D <- sqrt(apply(A, 1:2, function(x)sum(x * x)))
+    }
+    else if(spweight[1] == "absence") {
+        W <- ifelse(jointabsence(x)==1, 0, 1)
+        D <- sqrt(apply((W^2)*A, 1:2, function(x)sum(x * x))) / apply(W, 1:2, sum)
+    }
+    else if(length(spweight) == ncol(x)) {
+        W <- array(rep(spweight, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
+        D <- sqrt(apply((W^2)*A, 1:2, function(x)sum(x * x))) / apply(W, 1:2, sum)
+    }
+    else {
+        stop("Unknown weighting method.\n")
+    }
 }
 
 if(method == 2)
 {
 # Bray-Curtis distance
-    A <- paireddiff(x)
+     A <- paireddiff(x)
 	 A <- apply(A, 1:2, function(x)sum(abs(x)))
 	 B <- pairedsum(x)
 	 B <- apply(B, 1:2, sum)
-    D <- A / B
+     D <- A / B
 }
 
 if(method == 3)
 {
 # unstandardized manhattan distance
-A <- paireddiff(x)
-D <- apply(A, 1:2, function(x)sum(abs(x)))
+
+   A <- paireddiff(x)
+    if(is.null(spweight)) {
+	    D <- apply(A, 1:2, function(x)sum(abs(x)))
+    }
+    else if(spweight[1] == "absence") {
+        W <- ifelse(jointabsence(x)==1, 0, 1)
+        D <- apply(W*A, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else if(length(spweight) == ncol(x)) {
+        W <- array(rep(spweight, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
+        D <- apply(W*A, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else {
+        stop("Unknown weighting method.\n")
+    }
 }
 
 if(method == 4)
@@ -208,7 +247,82 @@ if(method == 7)
 	 C <- apply(C, 1:2, sum)
 	 D <- 1 - (2*A) / (2*A + B + C)
 }
-	 
+if(method == 8) 
+{
+    # Gower distance
+    # weighting
+    A <- paireddiff(x)
+    if(!is.null(sprange) & length(sprange) == ncol(x)) {
+        sprange <- array(rep(sprange, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
+        A <- A / sprange
+    }
+    else {
+        stop("sprange not recognized.\n")
+    }
+    if(is.null(spweight)) {
+	    D <- apply(A, 1:2, function(x)sum(abs(x)))
+    }
+    else if(spweight[1] == "absence") {
+        W <- ifelse(jointabsence(x)==1, 0, 1)
+        D <- apply(A*W, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else if(length(spweight) == ncol(x)) {
+        W <- array(rep(spweight, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
+        D <- apply(W*A, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else {
+        stop("Unknown weighting method.\n")
+    }
+}
+
+
+if(method == 9)
+{
+# modified Gower, base 10
+
+    x <- ifelse(x == 0, 0, log10(x))
+
+    A <- paireddiff(x)
+    if(is.null(spweight)) {
+	    D <- apply(A, 1:2, function(x)sum(abs(x)))
+    }
+    else if(spweight[1] == "absence") {
+        W <- ifelse(jointabsence(x)==1, 0, 1)
+        D <- apply(W*A, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else if(length(spweight) == ncol(x)) {
+        W <- array(rep(spweight, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
+        D <- apply(W*A, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else {
+        stop("Unknown weighting method.\n")
+    }
+}
+
+if(method == 10)
+{
+# modified Gower, base 2
+
+    x <- ifelse(x == 0, 0, log2(x))
+
+    A <- paireddiff(x)
+    if(is.null(spweight)) {
+	    D <- apply(A, 1:2, function(x)sum(abs(x)))
+    }
+    else if(spweight[1] == "absence") {
+        W <- ifelse(jointabsence(x)==1, 0, 1)
+        D <- apply(W*A, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else if(length(spweight) == ncol(x)) {
+        W <- array(rep(spweight, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
+        D <- apply(W*A, 1:2, function(x)sum(abs(x))) / apply(W, 1:2, sum)
+    }
+    else {
+        stop("Unknown weighting method.\n")
+    }
+}
+
+
 
 ## Make the results lower triangular	 
     D <- D[col(D) < row(D)]

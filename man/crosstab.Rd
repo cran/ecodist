@@ -5,7 +5,7 @@
   Converts field data of the form site, species, observation into a matrix.
 }
 \usage{
-crosstab(rowlab, collab, values, type = "sum", allrows, allcols)
+crosstab(rowlab, collab, values, type = "sum", allrows, allcols, ...)
 }
 \arguments{
   \item{rowlab}{ row labels, e.g. site names. }
@@ -14,6 +14,7 @@ crosstab(rowlab, collab, values, type = "sum", allrows, allcols)
   \item{type}{ function to use to combine data, one of "sum" (default), "min", "max", "mean". }
   \item{allrows}{ optional, list of desired row names that may not appear in rowlab. }
   \item{allcols}{ optional, list of desired column names that may not appear in collab. }
+  \item{...}{ optional arguments to the function specified in type, such as na.rm=TRUE}
 }
 
 \details{
