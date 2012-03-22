@@ -5,7 +5,7 @@
   Non-metric multidimensional scaling.
 }
 \usage{
-nmds(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, maxit = 500, trace = FALSE)
+nmds(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, maxit = 500, trace = FALSE, stresscalc="default")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +17,7 @@ nmds(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, maxit 
   \item{epsilon}{ optional, acceptable difference in stress. }
   \item{maxit}{ optional, maximum number of iterations. }
   \item{trace}{ if TRUE, will write progress indicator to the screen. }
+  \item{stresscalc}{ if "default" uses modified stress calculation; if "kruskal" uses unmodified Kruskal stress calculation. }
 }
 \details{
   The goal of NMDS is to find a configuration in a given number of dimensions which preserves rank-order dissimilarities as closely as possible. The number of dimensions must be specified in advance. Because NMDS is prone to finding local minima, several random starts must be used. Stress is used as the measure of goodness of fit. A lower stress indicates a better match between dissimilarity and ordination.

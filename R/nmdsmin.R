@@ -15,6 +15,11 @@ nmds.min <- function(x, dims=0)
         x$stress <- x$stress[x.dims == dims]
         x.min <- x$conf[x$stress == min(x$stress)]
     }
+    cat("Minimum stress for given dimensionality: ", x$stress[which.min(x$stress)], "\n")
+    cat("r^2 for minimum stress configuration: ", x$r2[which.min(x$stress)], "\n")
     x.min <- x.min[[1]]
-    data.frame(x.min)
+    x.min <- data.frame(x.min)
+    attr(x.min, "stress") <- x$stress[which.min(x$stress)]
+    attr(x.min, "r2") <- x$r2[which.min(x$stress)]
+    x.min
 }

@@ -1,9 +1,9 @@
-#include <S.h>
-#include <math.h>
+#include <R.h>
+#include <Rmath.h>
 #include <R_ext/Applic.h> /* for dgemm */
 
-#define RANDIN  seed_in((long *)NULL)
-#define RANDOUT seed_out((long *)NULL)
+#define RANDIN  GetRNGstate()
+#define RANDOUT PutRNGstate()
 #define UNIF unif_rand()
 #define S_EVALUATOR
 

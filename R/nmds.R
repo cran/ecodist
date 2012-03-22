@@ -1,4 +1,4 @@
-nmds <- function(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, maxit = 500, trace=FALSE)
+nmds <- function(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, maxit = 500, trace=FALSE, stresscalc="default")
 
 {
 # Non-metric multidimensional scaling function
@@ -19,20 +19,34 @@ nmds <- function(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1
 # and a vector of final stress values (stress),
 # along with the cumulative and incremental r^2 for each axis.
 # The first nits elements are for the lowest number of dimensions.
+#
+# stresscalc can be "default" for compatibility with previous versions 
+# of ecodist, or "kruskal" to follow Kruskal 1994 method exactly.
+
 
 nmdscalc <- function(dmat, ndim, iconf, epsilon, maxit, trace)
 
 {
 
-sstress <- function(dmat, cmat)
+sstress <- function(dmat, cmat, stresscalc)
 {
 # Calculates the stress-1 function for the original and
 # new NMDS configurations (Kruskal 1964).
 
-sstresscalc <- (dmat - cmat) ^ 2
-sstresscalc <- sum(sstresscalc) / sum(cmat ^ 2)
+    if(stresscalc == "default") {
+        sstresscalc <- (dmat - cmat) ^ 2
+        sstresscalc <- sum(sstresscalc) / sum(cmat ^ 2)
 
-sqrt(sstresscalc)
+        sqrt(sstresscalc)
+    }
+    else if(stresscalc == "kruskal") {
+        sstresscalc <- (dmat - cmat) ^ 2
+        sstresscalc <- sum(sstresscalc) / sum(dmat ^ 2)
+
+        sqrt(sstresscalc)
+    }
+    else stop("stresscalc has an unknown value\n")
+
 }
 
 # This is the optimization routine for NMDS ordination.
@@ -52,7 +66,7 @@ if(dim(iconf)[[2]] != ndim) {
 
 k <- 0
 conf <- iconf
-stress2 <- sstress(dmat, dist(iconf))
+stress2 <- sstress(dmat, dist(iconf), stresscalc)
 stress1 <- stress2 + 1 + epsilon
 
 while(k < maxit && abs(stress1 - stress2) > epsilon) {
@@ -72,7 +86,7 @@ while(k < maxit && abs(stress1 - stress2) > epsilon) {
 
    conf <- (1 / n) * b %*% conf
 
-   stress2 <- sstress(dmat, dist(conf))
+   stress2 <- sstress(dmat, dist(conf), stresscalc)
 
    if(trace) cat(k, ",\t", stress1, "\n")
 

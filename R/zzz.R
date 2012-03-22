@@ -2,6 +2,5 @@
 
 {
 library.dynam("ecodist", pkg, lib)
-library(stats)
 }
 

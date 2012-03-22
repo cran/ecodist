@@ -252,12 +252,14 @@ if(method == 8)
     # Gower distance
     # weighting
     A <- paireddiff(x)
-    if(!is.null(sprange) & length(sprange) == ncol(x)) {
-        sprange <- array(rep(sprange, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
-        A <- A / sprange
-    }
-    else {
-        stop("sprange not recognized.\n")
+    if(!is.null(sprange)) {
+        if(length(sprange) == ncol(x)) {
+            sprange <- array(rep(sprange, each=nrow(x)^2), dim=c(nrow(x), nrow(x), ncol(x)))
+            A <- A / sprange
+        }
+        else {
+            stop("sprange not recognized.\n")
+        }
     }
     if(is.null(spweight)) {
 	    D <- apply(A, 1:2, function(x)sum(abs(x)))

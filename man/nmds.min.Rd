@@ -13,7 +13,7 @@ nmds.min(x, dims = 0)
 }
 \value{
   Configuration of minimum stress ordination (dataframe of
-coordinates).
+coordinates). The stress and r^2 for the minimum stress configuration are stored as attributes.
 }
 \author{ Sarah Goslee, Sarah.Goslee@ars.usda.gov }
 
