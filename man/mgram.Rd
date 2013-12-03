@@ -6,7 +6,9 @@
 	Calculates simple and partial Mantel correlograms. 
 }
 \usage{
-mgram(species.d, space.d, breaks, nclass, stepsize, nperm = 1000, mrank = FALSE, nboot = 500, pboot = 0.9, cboot = 0.95, alternative = "two.sided", trace = FALSE)
+mgram(species.d, space.d, breaks, nclass, stepsize, nperm = 1000,
+    mrank = FALSE, nboot = 500, pboot = 0.9, cboot = 0.95, 
+    alternative = "two.sided", trace = FALSE)
 }
 \arguments{
   \item{species.d}{ lower-triangular dissimilarity matrix. }

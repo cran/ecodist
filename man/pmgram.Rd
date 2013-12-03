@@ -9,7 +9,7 @@ pmgram(data, space, partial, breaks, nclass, stepsize, resids = FALSE, nperm = 1
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{ lower-triangular dissimilarity matrix. }
+  \item{data}{ lower-triangular dissimilarity matrix. This can be either an object of class dist (treated as one column) or a matrix or data frame with one or two columns, each of which is an independent lower-triangular dissimilarity in vector form. }
   \item{space}{ lower-triangular matrix of geographic distances. }
   \item{partial}{ optional, lower-triangular dissimilarity matrix of ancillary data. }
   \item{breaks}{ locations of class breaks. If specified, overrides nclass and stepsize. }
@@ -41,7 +41,7 @@ If data has 2 columns and partial exists,
   mgram is a matrix with one row for each distance class and 4 columns:
   \item{lag }{midpoint of the distance class.}
   \item{ngroup }{number of distances in that class.}
-  \item{mantelr }{Mantel r value.}
+  \item{piecer }{Mantel r value.}
   \item{pval }{two-sided p-value.}
   resids is a vector of the residuals (if calcuated) and can be accessed with the residuals() method.
 }

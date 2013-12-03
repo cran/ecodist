@@ -6,7 +6,8 @@
   Simple and partial Mantel tests, with options for ranked data, permutation tests, and bootstrapped confidence limits.
 }
 \usage{
-mantel(formula = formula(data), data = sys.parent(), nperm = 1000, mrank = FALSE, nboot = 500, pboot = 0.9, cboot = 0.95)
+mantel(formula = formula(data), data = sys.parent(), nperm = 1000,
+    mrank = FALSE, nboot = 500, pboot = 0.9, cboot = 0.95)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

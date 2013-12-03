@@ -1,4 +1,4 @@
-crosstab <- function(rowlab, collab, values, type="sum", allrows, allcols, ...)
+crosstab <- function(rowlab, collab, values, type="sum", data, allrows, allcols, ...)
 
 {
 
@@ -20,15 +20,42 @@ crosstab <- function(rowlab, collab, values, type="sum", allrows, allcols, ...)
 # include all of those elements into the rows or colums of
 # the results matrix
 # scg 20 Apr 2006
+#
+###
+    # added data argument to simplify using data frames
+    # added count option to type (length of matching data)
+    # scg 2 Nov 2012
 
-rowlab <- as.vector(rowlab)
-collab <- as.vector(collab)
+if(!missing(data)) {
+    if(mode(substitute(rowlab)) == "name") rowlab <- data[, deparse(substitute(rowlab))]
+    if(mode(substitute(collab)) == "name") collab <- data[, deparse(substitute(collab))]
+    if(!missing(values) & mode(substitute(values)) == "name") values <- data[, deparse(substitute(values))]
+}
+
+    rowlab <- as.vector(rowlab)
+    collab <- as.vector(collab)
+
+    # if values are not provided, a count of combinations of rowlab and collab is returned
+    # equivalent to table(rowlab, collab)
+    if(missing(values)) {
+        values <- rep(1, length(rowlab))
+        type <- "sum" 
+    }
+
+    # if type is count and values are provided, combinations unique values are counted
+    if(type == "count") {
+        values <- paste(rowlab, collab, values)
+        values <- as.numeric(!duplicated(values))
+        type <- "sum" 
+    }
+
+    values <- as.vector(values)
 
 results <- switch(type,
 	mean = tapply(values, list(rowlab, collab), mean, ...),
 	max = tapply(values, list(rowlab, collab), max, ...),
 	min = tapply(values, list(rowlab, collab), min, ...),
-	sum = tapply(values, list(rowlab, collab), sum, ...),
+	sum = tapply(values, list(rowlab, collab), sum, ...)
 )
 
 if(!missing(allrows)) {

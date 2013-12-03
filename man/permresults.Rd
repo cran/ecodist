@@ -50,7 +50,9 @@ data(permresults)
 # example for sample size 10, correlation of 0.01
 
 permresults <- data.frame(matrix(0, nrow=1000, ncol=17))
-colnames(permresults) <- c("n", "r", "p500", "l100", "u100", "p1000", "l500", "u500", "p10000", "l1000", "u1000", "p100000", "l10000", "u10000", "p1000000", "l100000", "u100000")
+colnames(permresults) <- c("n", "r", "p500", "l100", "u100", "p1000", 
+    "l500", "u500", "p10000", "l1000", "u1000", "p100000", "l10000", "u10000", 
+    "p1000000", "l100000", "u100000")
 
 # generate correlated data
 corxy.len010.r010 <- corgen(len= 10, r= 0.01, epsilon=0.0001)
@@ -63,7 +65,8 @@ for(i in 1:1000) {
     permresults[i, 2] <- 0.01
     for(j in 1:5) {
 # record p-value, lower and upper confidence limits
-        thismantel <- mantel(corxy.len010.r010$y ~ corxy.len010.r010$x, nperm=all.nperm[j], nboot=all.nboot[j])
+        thismantel <- mantel(corxy.len010.r010$y ~ corxy.len010.r010$x, 
+		  nperm=all.nperm[j], nboot=all.nboot[j])
         permresults[i, (3*j):(3*j + 2)] <- c(thismantel[c(2,5,6)])
     }
 }

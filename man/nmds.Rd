@@ -5,7 +5,8 @@
   Non-metric multidimensional scaling.
 }
 \usage{
-nmds(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, maxit = 500, trace = FALSE, stresscalc="default")
+nmds(dmat, mindim = 1, maxdim = 2, nits = 10, iconf = 0, epsilon = 1e-12, 
+    maxit = 500, trace = FALSE, stresscalc="default")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
