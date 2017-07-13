@@ -5,7 +5,6 @@
 #define RANDIN  GetRNGstate()
 #define RANDOUT PutRNGstate()
 #define UNIF unif_rand()
-#define S_EVALUATOR
 
 void bootstrap(double *x, double *y, int *n, int *xlen, int *nboot, double *pboot, double *bootcor, int *rarray, int *rmat, double *xdif, double *ydif)
 
@@ -18,7 +17,6 @@ double xmean, ymean;
 double xsum;
 double xxsum, yysum;
 
-S_EVALUATOR
 
 /* Set random seed using Splus function */
 
@@ -113,7 +111,6 @@ int i, k, l, m;
 double cumsum;
 int temp;
 
-S_EVALUATOR
 
 /* Set random seed using Splus function */
 
@@ -204,7 +201,6 @@ double bsum;
 double w1, w2;
 int temp;
 
-S_EVALUATOR
 
 /* Set random seed using Splus function */
 
@@ -330,7 +326,7 @@ RANDOUT;
 
 
 
-void bcdist(double *x, int *pnrow, int *pncol, double *dist)
+void bcdistc(double *x, int *pnrow, int *pncol, double *dist)
 {
 int i, j, k, l;
 int nrow, ncol;
@@ -372,7 +368,6 @@ int i, k, l, m;
 double cumsum;
 int temp;
 
-S_EVALUATOR
 
 /* Set random seed using Splus function */
 
@@ -465,7 +460,6 @@ double cumsum;
 int temp;
 float naval = -9999;
 
-S_EVALUATOR
 
 /* Set random seed using Splus function */
 
@@ -734,7 +728,6 @@ char *transt = "T", *transn = "N";
 double one = 1.0, zero = 0.0;
 int onei = 1;
 
-S_EVALUATOR
 
 /* Set random seed using Splus function */
 
@@ -847,5 +840,302 @@ for(i = 0; i < *nperm; i++) {
 RANDOUT;
 
 }
+
+
+void xpermute(double *x, double *y, int *nrow, int *ncol, int *xlen, int *nperm, double *zstats, double *newx, int *rarray, int *carray)
+
+{
+
+int i, k, l, m;
+double cumsum;
+int temp;
+int newk, newl;
+
+
+/* Set random seed using Splus function */
+
+RANDIN;
+
+/* Calculate first z-statistic (unpermuted data). */
+
+
+cumsum = 0;
+
+for(k = 0; k < *xlen; k++) {
+   cumsum += x[k] * y[k];
+}
+
+zstats[0] = cumsum;
+
+
+/* Start permutation routine */
+
+for(i = 1; i < *nperm; i++) {
+
+cumsum = 0;
+
+/* Set up rarray. */
+
+   for(k = 0; k < *nrow; k++) {
+      rarray[k] = k;
+   }
+
+
+/* Set up carray. */
+
+   for(k = 0; k < *ncol; k++) {
+      carray[k] = k;
+   }
+
+/* Randomize rarray using an Splus function. */
+
+   for(k = 0; k < (*nrow - 1); k++) {
+      l = *nrow - k - 1;
+      m = (long)((float)l * UNIF);
+      if(m > l) m = l;
+      temp = rarray[l];
+      rarray[l] = rarray[m];
+      rarray[m] = temp;
+   }
+
+
+/* Randomize carray using an Splus function. */
+
+   for(k = 0; k < (*ncol - 1); k++) {
+      l = *ncol - k - 1;
+      m = (long)((float)l * UNIF);
+      if(m > l) m = l;
+      temp = carray[l];
+      carray[l] = carray[m];
+      carray[m] = temp;
+   }
+
+/* Reorder x. */
+
+	/* loop thru the rows
+	 * swapping each value with its replacement */
+
+   for(k = 0; k < *nrow; k++) {
+   }
+
+
+	for(l = 0; l < *nrow; l++) {
+		newl = rarray[l];
+		if(newl != l) {
+			for(k = 0; k < *ncol; k++) {
+				newx[k*(*nrow) + l] = x[k*(*nrow) + newl];
+			}
+		}
+	}
+
+	/* now x has the original info and newx has swapped rows */
+	/* go thru x and set x identical to newx before swapping columns */
+
+
+	for(k = 0; k < *ncol; k++) {
+		for(l = 0; l < *nrow; l++) {
+			x[k*(*nrow) + l] = newx[k*(*nrow) + l];
+		}
+	}
+
+
+	/* loop thru the columns
+	 * swapping each value with its replacement */
+
+   for(k = 0; k < *ncol; k++) {
+   }
+
+	for(k = 0; k < *ncol; k++) {
+		newk = carray[k];
+		if(newk != k) {
+			for(l = 0; l < *nrow; l++) {
+				newx[k*(*nrow) + l] = x[newk*(*nrow) + l];
+			}
+		}
+	}
+
+
+/* Calculate new sum of products. */
+
+   cumsum = 0;
+
+   for(k = 0; k < *xlen; k++) {
+         cumsum += x[k] * y[k];
+   
+   }
+
+   zstats[i] = cumsum;
+
+}
+
+/* Reset random seed using an Splus function. */
+
+RANDOUT;
+
+}
+
+
+
+void xpermpart(double *hmat, double *y, double *xcor, double *ycor, int *nrow, int *ncol, int *xlen, int *nperm, double *zstats, double *newy, int *rarray, int *carray)
+
+{
+
+int i, k, l, m;
+double cumsum;
+int temp;
+int newk, newl;
+
+
+/* Set random seed using Splus function */
+
+RANDIN;
+
+/* Calculate residuals for y */
+
+for(k = 0; k < *xlen; k++) {
+   ycor[k] = 0;
+}
+
+for(k = 0; k < *xlen; k++) {
+   for(l = 0; l < *xlen; l++) {
+      ycor[k] = ycor[k] + hmat[k * *xlen + l] * y[l];
+   }
+}
+
+
+/* Calculate first z-statistic (unpermuted data). */
+
+cumsum = 0;
+
+for(k = 0; k < *xlen; k++) {
+   cumsum += xcor[k] * ycor[k];
+}
+
+zstats[0] = cumsum;
+
+
+/* Start permutation routine */
+
+for(i = 1; i < *nperm; i++) {
+
+/* Set up rarray. */
+
+   for(k = 0; k < *nrow; k++) {
+      rarray[k] = k;
+   }
+
+
+/* Set up carray. */
+
+   for(k = 0; k < *ncol; k++) {
+      carray[k] = k;
+   }
+
+/* Randomize rarray using an Splus function. */
+
+   for(k = 0; k < (*nrow - 1); k++) {
+      l = *nrow - k - 1;
+      m = (long)((float)l * UNIF);
+      if(m > l) m = l;
+      temp = rarray[l];
+      rarray[l] = rarray[m];
+      rarray[m] = temp;
+   }
+
+
+/* Randomize carray using an Splus function. */
+
+   for(k = 0; k < (*ncol - 1); k++) {
+      l = *ncol - k - 1;
+      m = (long)((float)l * UNIF);
+      if(m > l) m = l;
+      temp = carray[l];
+      carray[l] = carray[m];
+      carray[m] = temp;
+   }
+
+
+
+/* Reorder y. */
+
+
+	/* loop thru the rows
+	 * swapping each value with its replacement */
+
+   for(k = 0; k < *nrow; k++) {
+   }
+
+
+	for(l = 0; l < *nrow; l++) {
+		newl = rarray[l];
+		if(newl != l) {
+			for(k = 0; k < *ncol; k++) {
+				newy[k*(*nrow) + l] = y[k*(*nrow) + newl];
+			}
+		}
+	}
+
+	/* now y has the original info and newy has swapped rows */
+	/* go thru y and set y identical to newy before swapping columns */
+
+
+	for(k = 0; k < *ncol; k++) {
+		for(l = 0; l < *nrow; l++) {
+			y[k*(*nrow) + l] = newy[k*(*nrow) + l];
+		}
+	}
+
+
+	/* loop thru the columns
+	 * swapping each value with its replacement */
+
+   for(k = 0; k < *ncol; k++) {
+   }
+
+	for(k = 0; k < *ncol; k++) {
+		newk = carray[k];
+		if(newk != k) {
+			for(l = 0; l < *nrow; l++) {
+				newy[k*(*nrow) + l] = y[newk*(*nrow) + l];
+			}
+		}
+	}
+
+
+
+
+
+/* Calculate residuals for y */
+
+for(k = 0; k < *xlen; k++) {
+   ycor[k] = 0;
+}
+
+for(k = 0; k < *xlen; k++) {
+   for(l = 0; l < *xlen; l++) {
+      ycor[k] = ycor[k] + hmat[k * *xlen + l] * y[l];
+   }
+}
+
+
+/* Calculate new sum of products. */
+
+   cumsum = 0;
+
+   for(k = 0; k < *xlen; k++) {
+         cumsum += xcor[k] * ycor[k];
+   
+   }
+
+   zstats[i] = cumsum;
+
+}
+
+/* Reset random seed using an Splus function. */
+
+RANDOUT;
+
+}
+
 
 

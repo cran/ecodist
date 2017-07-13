@@ -16,17 +16,19 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 
 # This function does four different analyses:
 # If data has 1 column and partial is missing, 
+# Multivariate correlogram
 # calculates a multivariate correlogram for data.
 #
 # If data has 2 columns and partial is missing,
+# Piecewise Mantel correlogram
 # calculates Mantel r between the two columns for each distance class.
 #
 # If data has 1 column and partial exists,
-# does a multivariate correlogram for the residuals
-# take residuals over whole extent
+# Partial multivariate correlogram
+# does a multivariate correlogram for the residuals over whole extent
 #
 # If data has 2 columns and partial exists,
-# does a partial multivariate correlogram 
+# Piecewise partial Mantel correlogram 
 # calculate partial for each distance class separately
 # 
 # results are:
@@ -57,12 +59,12 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
         nclass <- length(breaks) - 1
     }
 
-	answer.m <- matrix(0, nrow=nclass, ncol=4)
-	dimnames(answer.m) <- list(NULL, c("lag", "ngroup", "piecer", "pval"))
-   answer.m[,4] <- rep(0, nrow(answer.m))
+	answer.m <- matrix(NA, nrow=nclass, ncol=4)
+	dimnames(answer.m) <- list(NULL, c("lag", "ngroup", "pieceR", "pval"))
+    answer.m[,4] <- rep(NA, nrow(answer.m))
 
 # standardize so mean = 0, variance = 1
-	for(i in 1:ncol(data)) {
+	for(i in seq_len(ncol(data))) {
 		thiscol <- data[,i]
 		ydif <- thiscol - mean(thiscol)
 		yvar <- sqrt(sum(ydif^2)/length(ydif))
@@ -72,7 +74,7 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 
 	if(!missing(partial)) {
 		partial <- as.matrix(as.vector(partial))
-		for(i in 1:ncol(partial)) {
+		for(i in seq_len(ncol(partial))) {
 			thiscol <- partial[,i]
 			ydif <- thiscol - mean(thiscol)
 			yvar <- sqrt(sum(ydif^2)/length(ydif))
@@ -90,7 +92,8 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 
 	if(missing(partial)) {
 		if(ncol(data) == 1) {
-			for(i in 1:nclass) {
+            colnames(answer.m)[3] <- "wtI"
+			for(i in seq_len(nclass)) {
             dmin <- breaks[i]
             dmax <- breaks[i + 1]
          
@@ -104,7 +107,7 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 					ngroup <- length(space.dclass) - sum(space.dclass)
 					answer.m[i,2] <- ngroup
 
-					answer.m[i,3] <- (-1/ngroup) * sum(data[space.dclass == 0])
+					answer.m[i,3] <- (-1/ngroup) * sum(data[space.dclass == 0]) # similar to Moran's I
 					if(resids == TRUE) {
 						mgresids[space.dclass == 0] <- residuals(lm(data[space.dclass == 0] ~ space[space.dclass == 0]))
 					}
@@ -132,7 +135,7 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 			}
 		}
 		else {
-			for(i in 1:nclass) {
+			for(i in seq_len(nclass)) {
             dmin <- breaks[i]
             dmax <- breaks[i + 1]
 				answer.m[i,1] <- dmax
@@ -183,7 +186,8 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 	}
 	else {
 		if(ncol(data) == 1) {
-			for(i in 1:nclass) {
+            colnames(answer.m)[3] <- "wtI"
+			for(i in seq_len(nclass)) {
             dmin <- breaks[i]
             dmax <- breaks[i + 1]
 				answer.m[i,1] <- dmax
@@ -193,14 +197,14 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 				space.dclass[space > dmax] <- 1
 
 				ngroup <- sum(space.dclass== 0)
+				answer.m[i,2] <- ngroup
 
 				if(ngroup > 0) {
 
 					ngroup <- sum(space.dclass== 0)
-					answer.m[i,2] <- ngroup
 
 					data.lm <- residuals(lm(data ~ partial))	
-					answer.m[i,3] <- (-1/ngroup) * sum(data.lm[space.dclass == 0])
+					answer.m[i,3] <- (-1/ngroup) * sum(data.lm[space.dclass == 0]) # similar to Moran's I
 					if(resids == TRUE) {
 						mgresids[space.dclass == 0] <- residuals(lm(data[space.dclass == 0] ~ partial[space.dclass == 0]))
 					}
@@ -221,10 +225,10 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 			}
 		}
 		else {
-			for(i in 1:nclass) {
+			for(i in seq_len(nclass)) {
             dmin <- breaks[i]
             dmax <- breaks[i + 1]
-				answer.m[i,1] <- dmax
+				answer.m[i,1] <- (dmin + dmax) / 2
 	
 				space.dclass <- rep(0, length(space))
 				space.dclass[space <= dmin] <- 1
@@ -268,7 +272,7 @@ pmgram <- function(data, space, partial, breaks, nclass, stepsize, resids = FALS
 		}
 	}
 
-   results <- list(mgram = answer.m, resids = mgresids)
+   results <- list(mgram = data.frame(answer.m), resids = mgresids)
    class(results) <- "mgram"
    results
 }

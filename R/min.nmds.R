@@ -1,10 +1,16 @@
-nmds.min <- function(x, dims=0)
+min.nmds <- function(..., na.rm = FALSE, dims=2)
 
 {
 # returns the minimum-stress configuration from nmds output.
 # (Results from nmds)
-# if dims==0, returns the overall lowest-stress configuration 
+# if dims=0, returns the overall lowest-stress configuration 
 # Otherwise, returns the lowest-stress configuration of dimensionality dims
+
+# patched 2013-05-09 thanks to a bug report from Kellie Carim
+# this function replaces nmds.min
+
+    dots <- list(...)
+    x <- dots[[1]]
 
     if(dims == 0) {
         x.min <- x$conf[x$stress == min(x$stress)]
@@ -24,3 +30,5 @@ nmds.min <- function(x, dims=0)
     attr(x.min, "r2") <- x$r2[which.min(x$stress)]
     x.min
 }
+
+
