@@ -1,276 +1,374 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
+<title></title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<meta name="author" content="Sarah Goslee" />
-
-<meta name="date" content="2017-07-12" />
-
-<title>Dissimilarity Cheat Sheet</title>
-
-
-
-
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
 
 </head>
 
 <body>
-
-
-
-
-<h1 class="title toc-ignore">Dissimilarity Cheat Sheet</h1>
-<h4 class="author"><em>Sarah Goslee</em></h4>
-<h4 class="date"><em>2017-07-12</em></h4>
-
-
-
 <p><strong>Things to do with dissimilarity matrices</strong></p>
+
 <p><em>(ecodist functions are marked in <strong>bold</strong>)</em></p>
+
 <p><em>(untested ideas marked with ?)</em></p>
-<table style="width:60%;">
-<colgroup>
-<col width="18%"></col>
-<col width="15%"></col>
-<col width="9%"></col>
-<col width="16%"></col>
-</colgroup>
-<thead>
-<tr class="header">
+
+<table><thead>
+<tr>
 <th>Description</th>
 <th>Notation</th>
 <th>Name</th>
 <th>R function</th>
 </tr>
-</thead>
-<tbody>
-<tr class="odd">
+</thead><tbody>
+<tr>
 <td>Relationship between two matrices</td>
 <td>D1 ~ D2</td>
 <td>Mantel test</td>
 <td><strong>mantel</strong>(D1 ~ D2)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Relationship between two matrices given more</td>
-<td>D1 ~ D2 | D3 … Dn</td>
+<td>D1 ~ D2 &#124; D3 &hellip; Dn</td>
 <td>Partial Mantel test</td>
-<td><strong>mantel</strong>(D1 ~ D2 + D3 + …)</td>
+<td><strong>mantel</strong>(D1 ~ D2 + D3 + &hellip;)</td>
 </tr>
-<tr class="odd">
+<tr>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Spatial structure in one matrix</td>
 <td>D1 x S</td>
 <td>Mantel correlogram</td>
 <td><strong>mgram</strong>(D1, S)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Spatial structure in one matrix given more</td>
-<td>D1 | D2 … Dn x S</td>
+<td>D1 &#124; D2 &hellip; Dn x S</td>
 <td>Partial Mantel correlogram</td>
-<td><strong>?mgram</strong>(residuals(lm(D1 ~ D2 + …)), space)</td>
+<td><strong>?mgram</strong>(residuals(lm(D1 ~ D2 + &hellip;)), space)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Spatial structuce in one matrix</td>
 <td>D1 x S</td>
 <td>Multivariate correlogram</td>
 <td><strong>pmgram</strong>(D1, S)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Spatial structure in one matrix given more</td>
-<td>D1 | D2 … Dn x S</td>
+<td>D1 &#124; D2 &hellip; Dn x S</td>
 <td>Partial multivariate correlogram</td>
 <td><strong>pmgram</strong>(D1, S, D2)</td>
 </tr>
-<tr class="even">
+<tr>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Spatial structure in the relationship between two matrices</td>
 <td>D1 ~ D2 x S</td>
 <td>Mantel cross-correlogram</td>
 <td><strong>pmgram</strong>(cbind(lower(D1), lower(D2)), S)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Spatial structure in the relationship between two matrices given more</td>
-<td>D1 ~ D2 | D3 … Dn x S</td>
+<td>D1 ~ D2 &#124; D3 &hellip; Dn x S</td>
 <td>Partial Mantel cross-correlogram</td>
 <td><strong>pmgram</strong>(cbind(lower(D1), lower(D2)), S, D3)</td>
 </tr>
-<tr class="odd">
+<tr>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Ordination of one matrix</td>
 <td></td>
 <td>(N)MDS</td>
 <td><strong>nmds</strong>(y) or <strong>pco</strong>(y)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Ordination of one matrix given more</td>
 <td></td>
 <td>(Partial (N)MDS</td>
-<td><strong>?nmds</strong>(residuals(lm(y ~ z1 + …)))</td>
+<td><strong>?nmds</strong>(residuals(lm(y ~ z1 + &hellip;)))</td>
 </tr>
-<tr class="even">
+<tr>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Grouping of items based on one matrix</td>
 <td></td>
 <td>Cluster analysis</td>
 <td>hclust(y)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Grouping of items based on one matrix given more</td>
 <td></td>
 <td>Partial cluster analysis</td>
-<td>?hclust(residuals(lm(y ~ z1 + …)))</td>
+<td>?hclust(residuals(lm(y ~ z1 + &hellip;)))</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Grouping of items given space</td>
 <td></td>
 <td>Spatially-constrained cluster analysis</td>
 <td>NA</td>
 </tr>
-<tr class="even">
+<tr>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Multiple regression</td>
-<td>D1 ~ D2 | D3 … Dn</td>
+<td>D1 ~ D2 &#124; D3 &hellip; Dn</td>
 <td>Multiple regression on distance matrices</td>
-<td><strong>MRM</strong>(D1 ~ D2 + D3 + …)</td>
+<td><strong>MRM</strong>(D1 ~ D2 + D3 + &hellip;)</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
+
 <p><strong>Ways to calculate dissimilarity matrices</strong></p>
-<table style="width:47%;">
-<colgroup>
-<col width="18%"></col>
-<col width="12%"></col>
-<col width="16%"></col>
-</colgroup>
-<thead>
-<tr class="header">
+
+<table><thead>
+<tr>
 <th>Description</th>
 <th>Result</th>
 <th>R function</th>
 </tr>
-</thead>
-<tbody>
-<tr class="odd">
+</thead><tbody>
+<tr>
 <td>From a site by sample matrix</td>
 <td>Symmetric matrix with zero diagonals</td>
 <td>dist(x) or <strong>bcdist</strong>(x) or <strong>distance</strong>(x)</td>
 </tr>
-</tbody>
-</table>
-<hr />
+</tbody></table>
+
+<hr/>
+
 <p><strong>Things to do with cross-dissimilarity matrices</strong></p>
-<table style="width:60%;">
-<colgroup>
-<col width="18%"></col>
-<col width="15%"></col>
-<col width="9%"></col>
-<col width="16%"></col>
-</colgroup>
-<thead>
-<tr class="header">
+
+<table><thead>
+<tr>
 <th>Description</th>
 <th>Notation</th>
 <th>Name</th>
 <th>R function</th>
 </tr>
-</thead>
-<tbody>
-<tr class="odd">
+</thead><tbody>
+<tr>
 <td>Relationship between two cross-dissimilarity matrices</td>
 <td>D12 ~ D34</td>
 <td>Cross-Mantel test</td>
 <td><strong>xmantel</strong>(D12 ~ D34)</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Relationship between two cross-dissimilarity matrices given more</td>
-<td>D12 ~ D34 | D56 … Dn</td>
+<td>D12 ~ D34 &#124; D56 &hellip; Dn</td>
 <td>Partial cross-Mantel test</td>
-<td><strong>xmantel</strong>(D12 ~ D34 + D56 + …)</td>
+<td><strong>xmantel</strong>(D12 ~ D34 + D56 + &hellip;)</td>
 </tr>
-<tr class="odd">
+<tr>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<tr class="even">
+<tr>
 <td>Spatial structure in one cross-dissimilarity matrix</td>
 <td>D12 x S</td>
 <td>Cross-Mantel correlogram</td>
 <td><strong>xmgram</strong>(D12, spaceX)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Spatial structure in one cross-dissimilarity matrix given more</td>
-<td>D12 | D34 … Dn x S</td>
+<td>D12 &#124; D34 &hellip; Dn x S</td>
 <td>Partial cross-Mantel correlogram</td>
-<td><strong>?xmgram</strong>(residuals(lm(D12 ~ D34 + …)), spaceX)</td>
+<td><strong>?xmgram</strong>(residuals(lm(D12 ~ D34 + &hellip;)), spaceX)</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
+
 <p><strong>Ways to calculate cross-dissimilarity matrices</strong></p>
-<table style="width:40%;">
-<colgroup>
-<col width="11%"></col>
-<col width="12%"></col>
-<col width="16%"></col>
-</colgroup>
-<thead>
-<tr class="header">
+
+<table><thead>
+<tr>
 <th>Source</th>
 <th>Result</th>
 <th>R function</th>
 </tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>From 2 site by sample matrixes for the same sites and samples (e.g. different years)</td>
+</thead><tbody>
+<tr>
+<td>From 2 site by sample matrixes for the same sites and samples (e.g. different years)</td>
 <td>nonsymmetric matrix with nonzero diagonals</td>
 <td><strong>xdistance</strong>(x, y)</td>
 </tr>
-</tbody>
-</table>
-
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
+</tbody></table>
 
 </body>
+
 </html>

@@ -6,8 +6,8 @@
 }
 
 \usage{
-MRM(formula = formula(data), data = sys.parent(), nperm = 1000, method = "linear",
-mrank = FALSE)
+MRM(formula = formula(data), data = sys.parent(), nperm = 1000,
+	method = "linear", mrank = FALSE)
 }
 
 \arguments{
@@ -25,7 +25,7 @@ mrank = FALSE)
   \item{coef }{A matrix with regression coefficients and associated p-values from the permutation test (using the pseudo-t of Legendre et al. 1994).}
   \item{r.squared }{Regression R-squared and associated p-value from the permutation test (linear only). }
   \item{F.test }{F-statistic and p-value for overall F-test for lack of fit (linear only).}
-  \item{dev }{Residual deviance, degrees of freetom, and associated p-value (logistic only).}
+  \item{dev }{Residual deviance, degrees of freedom, and associated p-value (logistic only).}
 }
 
 \references{
@@ -39,14 +39,18 @@ Legendre, P.; Lapointe, F. and Casgrain, P. 1994. Modeling brain evolution from 
 
 \examples{
 
-data(graze)
+  data(graze)
 
-# This grass is related to forest cover but not location
-MRM(dist(LOAR10) ~ dist(sitelocation) + dist(forestpct), data=graze, nperm=100)
+  # Abundance of this grass is related to forest cover but not location
+  MRM(dist(LOAR10) ~ dist(sitelocation) + dist(forestpct), data=graze, nperm=10)
 
-# This legume is related to location but not forest cover
-MRM(dist(TRRE3) ~ dist(sitelocation) + dist(forestpct), data=graze, nperm=100)
+  # Abundance of this legume is related to location but not forest cover
+  MRM(dist(TRRE3) ~ dist(sitelocation) + dist(forestpct), data=graze, nperm=10)
 
+  # Compare to presence/absence of grass LOAR10 using logistic regression
+  LOAR10.presence <- ifelse(graze$LOAR10 > 0, 1, 0)
+  MRM(dist(LOAR10.presence) ~ dist(sitelocation) + dist(forestpct), 
+  	data=graze, nperm=10, method="logistic")
 }
 
 \keyword{ multivariate }
