@@ -1,4 +1,4 @@
-cd12201038079d9ddc696214da2f0931 *DESCRIPTION
+7a0aa2a16754940154741a6f96f2230b *DESCRIPTION
 92b7eabdaca7f4c268f89e0853207523 *NAMESPACE
 5f0ef9404bd7057eea29a96244297ae9 *R/MRM.R
 46ede2c4d3401991a8ebb65990c90e87 *R/addord.R
@@ -6,7 +6,7 @@ cd12201038079d9ddc696214da2f0931 *DESCRIPTION
 de02c50220be92a6c292a98e07d8db21 *R/cor2m.R
 a6ac5872408b8e3203c99014a5a99f1f *R/corgen.R
 ba9e2a92d06d4cddaf72aeed535ab7a2 *R/crosstab.R
-edf52952a8ffe02d09e1c276e08348b5 *R/distance.R
+6050c7d03064260b83d8c4d9750d67b1 *R/distance.R
 2c71a7ce644f23b66401b0939e0f8320 *R/fixdmat.R
 305b662a275ddac44f45aa0c549b8260 *R/full.R
 2bb91743927cc288ef6d315d27e35284 *R/lower.R
@@ -27,8 +27,8 @@ cee9b31c2b37570d3e49a7421a65f0d0 *R/pmgram.R
 72025b2856dd48e51913caa3634d8594 *R/xmantel.R
 aaf294df7cdaee6f7cf13bd12af35674 *R/xmgram.R
 db33b4158c11a6862982c0deb9c6015a *README.md
-d85ab23fe5abff3171f56397f2245aab *build/partial.rdb
-b5366c2d1bb02f960de6295d140c42b1 *build/vignette.rds
+08a010c4648b39d0f3292399b69fc41b *build/partial.rdb
+0b309014bc05ef4a7c556129904476d2 *build/vignette.rds
 13c854d8d590fa79dc316628ab0b272a *data/bump.pmgram.rda
 30d5b5d4e55edba01b24da1e0b460cba *data/bump.rda
 6d3e215e51dab584c898839558991136 *data/graze.rda
@@ -38,9 +38,9 @@ cd86940eef6a822ecfd87569cb3ec77d *data/iris.vf.rda
 c8c954eb6921bedc8f9c24e833c08526 *data/iris.vfrot.rda
 b204771dff335c364aabb3a6e8f54be6 *data/z.no.rda
 77a8d71949fae669d76c6a4ef95e66f5 *data/z.z1.rda
-f47f634fbe21cca4076998086898f770 *inst/CITATION
+903cb4f0edbc12c541e2521ff7454598 *inst/CITATION
 205271f3d799059e5f3eb4a3a3bbc568 *inst/doc/dissimilarity.Rmd
-a9f6a0eb884525183d153a916065cda0 *inst/doc/dissimilarity.html
+095c7ef142c7ecf2364ccbe50cf0faef *inst/doc/dissimilarity.html
 7424e92fb8ef9f4bd59fba261b571999 *man/MRM.Rd
 697cee16af18f9cfc0888e1b49464c83 *man/addord.Rd
 896281685766f866b18a647ca4686b05 *man/bcdist.Rd
@@ -49,7 +49,7 @@ ebb224fb20719ab6fab64031b0c12b14 *man/bump.pmgram.Rd
 e6b9ab94534537576561009f321d806c *man/cor2m.Rd
 9b90d64da318102da8efc1de43e84f82 *man/corgen.Rd
 400c1c34d4c579ed3e6c203d97a0757a *man/crosstab.Rd
-24430cb4d9fc5343ae1a94a7d11a9563 *man/distance.Rd
+52988ca389a8b078ff9a405ba9cc5c12 *man/distance.Rd
 81a6795b0f5396ef52c22ec614b97fa4 *man/ecodist-package.Rd
 599455d49118abd375c58788d9c6291f *man/fixdmat.Rd
 754485899ec74a1f60f2531a8be37127 *man/full.Rd
@@ -77,7 +77,7 @@ c61730782ee270d953df4a7594ec9d90 *man/xmantel.Rd
 d2c3e1dbf7218fe03c5224be0febb8d7 *man/z.no.Rd
 3cf440ab38db7938ae6d2e130ab95a42 *man/z.z1.Rd
 7ad45eea54b4e506438c8dd620473f96 *src/Makevars
-925cb98d61564e4b1999b8950330e08a *src/ecodist.c
+45a4337aae018cf01482a72219abe977 *src/ecodist.c
 41278d00a33cc545da4aebc4e8f7ab43 *src/init.c
 9ddd5708c58d58e3550696f3119e87ed *tests/testthat.R
 80c568577c3aae89c23492c1caeb9b7d *tests/testthat/test-MRM.R

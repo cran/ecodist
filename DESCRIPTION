@@ -1,6 +1,6 @@
 Package: ecodist
-Version: 2.0.7
-Date: 2020-08-26
+Version: 2.0.9
+Date: 2022-05-04
 Title: Dissimilarity-Based Functions for Ecological Analysis
 Authors@R: c(person("Sarah", "Goslee", role = c("aut", "cre"),
                      email = "Sarah.Goslee@usda.gov"),
@@ -17,6 +17,6 @@ Description: Dissimilarity-based analysis functions including ordination and Man
 License: GPL (>= 2)
 BugReports: https://github.com/phiala/ecodist/issues
 NeedsCompilation: yes
-Packaged: 2020-08-26 21:39:21 UTC; sarahg
+Packaged: 2022-05-04 19:46:58 UTC; sarahg
 Repository: CRAN
-Date/Publication: 2020-08-28 06:30:09 UTC
+Date/Publication: 2022-05-05 06:50:08 UTC

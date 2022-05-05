@@ -16,6 +16,29 @@
 
 <title>Dissimilarity Cheat Sheet</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
 
 
 
@@ -224,10 +247,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p><em>(untested ideas marked with ?)</em></p>
 <table>
 <colgroup>
-<col width="30%"></col>
-<col width="25%"></col>
-<col width="15%"></col>
-<col width="28%"></col>
+<col width="30%" />
+<col width="25%" />
+<col width="15%" />
+<col width="28%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -293,7 +316,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td><strong>pmgram</strong>(cbind(lower(D1), lower(D2)), S)</td>
 </tr>
 <tr class="even">
-<td>Spatial structure in the relationship between two matrices given more</td>
+<td>Spatial structure in the relationship between two matrices given
+more</td>
 <td>D1 ~ D2 | D3 … Dn x S</td>
 <td>Partial Mantel cross-correlogram</td>
 <td><strong>pmgram</strong>(cbind(lower(D1), lower(D2)), S, D3)</td>
@@ -357,9 +381,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p><strong>Ways to calculate dissimilarity matrices</strong></p>
 <table>
 <colgroup>
-<col width="38%"></col>
-<col width="25%"></col>
-<col width="35%"></col>
+<col width="38%" />
+<col width="25%" />
+<col width="35%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -372,7 +396,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <tr class="odd">
 <td>From a site by sample matrix</td>
 <td>Symmetric matrix with zero diagonals</td>
-<td>dist(x) or <strong>bcdist</strong>(x) or <strong>distance</strong>(x)</td>
+<td>dist(x) or <strong>bcdist</strong>(x) or
+<strong>distance</strong>(x)</td>
 </tr>
 </tbody>
 </table>
@@ -380,10 +405,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p><strong>Things to do with cross-dissimilarity matrices</strong></p>
 <table>
 <colgroup>
-<col width="30%"></col>
-<col width="25%"></col>
-<col width="15%"></col>
-<col width="28%"></col>
+<col width="30%" />
+<col width="25%" />
+<col width="15%" />
+<col width="28%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -401,7 +426,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td><strong>xmantel</strong>(D12 ~ D34)</td>
 </tr>
 <tr class="even">
-<td>Relationship between two cross-dissimilarity matrices given more</td>
+<td>Relationship between two cross-dissimilarity matrices given
+more</td>
 <td>D12 ~ D34 | D56 … Dn</td>
 <td>Partial cross-Mantel test</td>
 <td><strong>xmantel</strong>(D12 ~ D34 + D56 + …)</td>
@@ -429,9 +455,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p><strong>Ways to calculate cross-dissimilarity matrices</strong></p>
 <table>
 <colgroup>
-<col width="26%"></col>
-<col width="30%"></col>
-<col width="42%"></col>
+<col width="26%" />
+<col width="30%" />
+<col width="42%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -442,7 +468,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </thead>
 <tbody>
 <tr class="odd">
-<td>From 2 site by sample matrixes for the same sites and samples (e.g. different years)</td>
+<td>From 2 site by sample matrixes for the same sites and samples
+(e.g. different years)</td>
 <td>nonsymmetric matrix with nonzero diagonals</td>
 <td><strong>xdistance</strong>(x, y)</td>
 </tr>
