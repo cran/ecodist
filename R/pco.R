@@ -13,8 +13,12 @@ if(abs(n - round(n)) > 0.0000001)
     stop("Matrix not square.\n")
 n <- round(n)
 
+xlabels <- labels(x)
+
 x <- full(x)
 
+# note cmdscale does this in two steps
+# so dmat does not match cmdscale()$x
 dmat <- -0.5 * x * x
 
 # Double-center the dissimilarity matrix
@@ -48,8 +52,11 @@ if(dround > 0) {
 
 eigenscale <- deigen$values
 eigenscale[eigenscale > 0.000000001] <- sqrt(eigenscale[eigenscale > 0.000000001])
-eigenscale[eigenscale <= 0.000000001] <- 1
-deigen$vectors <- sweep(deigen$vectors, 2, eigenscale, "/")
+deigen$vectors <- sweep(deigen$vectors, 2, eigenscale, "*")
+
+deigen$vectors <- data.frame(deigen$vectors)
+rownames(deigen$vectors) <- xlabels
+colnames(deigen$vectors) <- paste0("X", seq_len(ncol(deigen$vectors)))
 
 deigen
 

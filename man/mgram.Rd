@@ -5,7 +5,7 @@
 	Calculates simple Mantel correlograms.
 }
 \usage{
-mgram(species.d, space.d, breaks, nclass, stepsize, nperm = 1000,
+mgram(species.d, space.d, breaks, nclass, stepsize, equiprobable = FALSE, nperm = 1000,
     mrank = FALSE, nboot = 500, pboot = 0.9, cboot = 0.95,
     alternative = "two.sided", trace = FALSE)
 }
@@ -16,6 +16,7 @@ mgram(species.d, space.d, breaks, nclass, stepsize, nperm = 1000,
   \item{nclass}{ number of distance classes. If not specified, Sturge's rule will be used
 to determine an appropriate number of classes. }
   \item{stepsize}{ width of each distance class. If not specified, nclass and the range of space.d will be used to calculate an appropriate default. }
+  \item{equiprobable}{ if TRUE, create nclass classes of equal number of distances; if FALSE, create nclass classes of equal width }  
   \item{nperm}{ number of permutations to use. If set to 0, the permutation test will be omitted. }
   \item{mrank}{ if this is set to FALSE (the default option), Pearson correlations will be used. If
  set to TRUE, the Spearman correlation (correlation ranked distances) will be used. }
@@ -27,9 +28,7 @@ to determine an appropriate number of classes. }
   \item{trace}{ if TRUE, returns progress indicators. }
 }
 \details{
-This function calculates Mantel correlograms. The Mantel correlogram is essentially a multivariate autocorrelation function.
-The Mantel r represents the dissimilarity in variable composition  (often
-species composition) at a particular lag distance.
+This function calculates Mantel correlograms, and tests the hypothesis that the mean compositional dissimilarity within a distance class differs from the mean of all the other distance classes combined. The Mantel correlogram is essentially a multivariate autocorrelation function. The Mantel r represents the dissimilarity in variable composition  (often species composition) at a particular lag distance, and significance is tested in reference to all distance classes.
 }
 \value{
 	Returns an object of class mgram, which is a list with two elements.

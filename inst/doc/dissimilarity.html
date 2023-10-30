@@ -31,13 +31,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
 
 
 
@@ -280,27 +281,29 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td></td>
 </tr>
 <tr class="even">
-<td>Spatial structure in one matrix</td>
+<td>Spatial structure in one matrix relative to all distance
+classes</td>
 <td>D1 x S</td>
 <td>Mantel correlogram</td>
 <td><strong>mgram</strong>(D1, S)</td>
 </tr>
 <tr class="odd">
-<td>Spatial structure in one matrix given more</td>
+<td>Spatial structure in one matrix given more relative to all distance
+classes</td>
 <td>D1 | D2 … Dn x S</td>
 <td>Partial Mantel correlogram</td>
 <td><strong>?mgram</strong>(residuals(lm(D1 ~ D2 + …)), space)</td>
 </tr>
 <tr class="even">
-<td>Spatial structuce in one matrix</td>
+<td>Spatial structuce in one matrix by distance class</td>
 <td>D1 x S</td>
-<td>Multivariate correlogram</td>
+<td>Piecewise multivariate correlogram</td>
 <td><strong>pmgram</strong>(D1, S)</td>
 </tr>
 <tr class="odd">
-<td>Spatial structure in one matrix given more</td>
+<td>Spatial structure in one matrix by distance class given more</td>
 <td>D1 | D2 … Dn x S</td>
-<td>Partial multivariate correlogram</td>
+<td>Piecewise partial multivariate correlogram</td>
 <td><strong>pmgram</strong>(D1, S, D2)</td>
 </tr>
 <tr class="even">
@@ -312,14 +315,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <tr class="odd">
 <td>Spatial structure in the relationship between two matrices</td>
 <td>D1 ~ D2 x S</td>
-<td>Mantel cross-correlogram</td>
+<td>Piecewise Mantel cross-correlogram</td>
 <td><strong>pmgram</strong>(cbind(lower(D1), lower(D2)), S)</td>
 </tr>
 <tr class="even">
 <td>Spatial structure in the relationship between two matrices given
 more</td>
 <td>D1 ~ D2 | D3 … Dn x S</td>
-<td>Partial Mantel cross-correlogram</td>
+<td>Piecewise partial Mantel cross-correlogram</td>
 <td><strong>pmgram</strong>(cbind(lower(D1), lower(D2)), S, D3)</td>
 </tr>
 <tr class="odd">
@@ -350,7 +353,7 @@ more</td>
 <td>Grouping of items based on one matrix</td>
 <td></td>
 <td>Cluster analysis</td>
-<td>hclust(y)</td>
+<td>eg hclust(y)</td>
 </tr>
 <tr class="even">
 <td>Grouping of items based on one matrix given more</td>

@@ -2,11 +2,10 @@
 \alias{mgroup}
 \title{ Mantel test for groups }
 \description{
-  Simple and partial Mantel tests, with options for ranked data, 
-  permutation tests, and bootstrapped confidence limits.
+  Mantel test across one or more group contrasts.
 }
 \usage{
-mgroup(edist, groups, nperm=1000)
+mgroup(edist, groups, nperm = 1000, mrank = FALSE)
 }
 
 \arguments{
@@ -16,6 +15,9 @@ mgroup(edist, groups, nperm=1000)
   sets of groups. }
   \item{nperm}{ number of permutations to use. If set to 0, the 
   permutation test will be omitted. }
+  \item{mrank}{ if this is set to FALSE (the default option), Pearson correlations will be used. If
+ set to TRUE, the Spearman correlation (correlation ranked distances) will be used. }
+
 }
 \details{
  	\code{mgroup} returns the Mantel correlations for group contrast 

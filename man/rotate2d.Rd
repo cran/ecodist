@@ -1,27 +1,35 @@
-\name{vf}
-\alias{vf}
-\title{ Vector fitting }
+\name{rotate2d}
+\alias{rotate2d}
+\title{
+  Rotate a 2D ordination.
+}
 \description{
-  Fits ancillary variables to an ordination configuration.
+  Rotates a two-dimensional ordination configuration to place the direction indicated along the horizontal axis.
 }
 \usage{
-vf(ord, vars, nperm = 100)
+rotate2d(ord, x)
 }
+%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{ord}{ matrix containing a 2-dimensional ordination result with axes as columns. }
-  \item{vars}{ matrix with ancillary variables as columns. }
-  \item{nperm}{ number of permutation for the significance test. If nperm = 0, the test will be omitted. }
+  \item{ord}{
+    A matrix or data frame with two columns, or a vf object, containing the points of an ordination configuration.
+}
+  \item{x}{
+    The coordinates of a point in the ordination space. }
 }
 \details{
- Vector fitting finds the maximum correlation of the individual variables with a configuration of samples in ordination space. 
+    The configuration ord is rotated so that the vector defined by c(0, 0), and x is along the horizontal axis. This can be useful for placing a specific variable, for instance from vf(), in a consistent direction across multiple ordinations. Doing so can facilitate interpretation.
 }
 \value{
-  an object of class vf, which is a data frame with the first 2 columns containing the scores for every variable in each of the 2 dimensions of the ordination space. r is the maximum correlation of the variable with the ordination space, and pval is the result of the permutation test.
-  }
-\references{ Jongman, R.H.G., C.J.F. ter Braak and O.F.R. van Tongeren. 1995. Data analysis in community and landscape ecology. Cambridge University Press, New York. }
-\author{ Sarah Goslee }
+    A rotated data frame of coordinates of the same size as ord and in the same order. If ord was produced by vf(), the complete vf object is returned.
+}
+\author{
+Sarah Goslee
+}
 
-\seealso{ \code{\link{plot.vf}} }
+\seealso{
+    \code{\link{vf}}, \code{\link{nmds}}
+}
 \examples{
 
 # Example of multivariate analysis using built-in iris dataset
@@ -62,3 +70,4 @@ plot(iris.vf.rot)
 
 }
 \keyword{ multivariate }
+
